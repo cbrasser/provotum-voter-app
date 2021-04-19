@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { Text, Platform, FlatList, View } from 'react-native';
-import { getElections, selectElections } from './../redux/elections/electionSlice';
+import { selectElections } from './../redux/elections/electionSlice';
 const styles = require('./../style');
 
 
@@ -20,18 +20,14 @@ const renderElection = ({ election }) => (
 
 const Votes = () => {
 
-    const vaUrl = 'localhost:3000'
 
-    const dispatch = useDispatch();
+
     const elections = useSelector(selectElections);
     const renderElections = elections.map(e => (<View><Text>{e.title}</Text></View>))
 
-    useEffect(() => {
-        dispatch(getElections(vaUrl));
 
-    }, [dispatch]);
     return (
-        <View>
+        <View style={styles.container}>
             {renderElections}
         </View>
 

@@ -9,39 +9,30 @@
 
 import React from 'react';
 import type { Node } from 'react';
-
-
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-
-
-import Login from './views/login';
-import Votes from './views/votes';
-// import StoreManager from './components/StoreManager'
-import store from './store';
-import { Provider } from "react-redux";
+import {
+  StatusBar, SafeAreaView
+} from 'react-native';
 
 const styles = require('./style');
-const Stack = createStackNavigator();
 
+import StoreManager from './StoreManager'
+import store from './store';
+import { Provider } from "react-redux";
 
 
 const App: () => Node = () => {
 
 
   return (
-    <Provider store={store}>
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen
-            name="Login"
-            component={Login}
-            options={{ title: 'Login' }}
-          />
-          <Stack.Screen name="votes" component={Votes} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </Provider>
+    <SafeAreaView style={styles.container}>
+      <StatusBar barStyle={true ? 'light-content' : 'dark-content'} />
+      <Provider store={store}>
+        <StoreManager>
+
+        </StoreManager>
+      </Provider>
+    </SafeAreaView>
+
   );
 };
 

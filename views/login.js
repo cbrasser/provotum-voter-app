@@ -12,24 +12,20 @@ const Login = ({ navigation }) => {
     const submitSeedPhrase = () => navigation.navigate('votes', { name: 'Jane' });
     return (
 
-        <SafeAreaView style={styles.container}>
-            <StatusBar barStyle={true ? 'light-content' : 'dark-content'} />
-
-            <KeyboardAvoidingView
-                behavior={Platform.OS === "ios" ? "padding" : "height"}
-                style={styles.container}
-            >
-                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                    <View style={styles.inner}>
-                        <Text style={styles.header}>Enter seed phrase</Text>
-                        <TextInput placeholder="Seed" style={styles.textInput} />
-                        <View style={styles.btnContainer}>
-                            <Button title="Submit" onPress={submitSeedPhrase} />
-                        </View>
+        <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            style={styles.container}
+        >
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss} >
+                <View style={styles.inner}>
+                    <Text style={styles.header}>Enter seed phrase</Text>
+                    <TextInput placeholder="Seed" style={styles.textInput} />
+                    <View style={styles.btnContainer}>
+                        <Button title="Submit" onPress={submitSeedPhrase} />
                     </View>
-                </TouchableWithoutFeedback>
-            </KeyboardAvoidingView>
-        </SafeAreaView>
+                </View>
+            </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
 
     )
 };

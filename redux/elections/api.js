@@ -5,7 +5,7 @@ export const getVotes = async (vaUrl) => {
     console.log("fetching votes");
     try {
         let response = await axios.get(`http://${vaUrl}/votes`);
-        console.log(response.data);
+        //console.log(response.data);
         return response.data;
     } catch (e) {
         console.log(e);
@@ -21,7 +21,7 @@ export const fetchResults = async (vaUrl, electionId) => {
                 voteId: electionId
             }
         });
-        console.log(response.data);
+        //console.log(response.data);
         return response.data;
 
     } catch (e) {

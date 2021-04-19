@@ -4,6 +4,8 @@ import {
     Platform,
     PlatformColor,
 } from 'react-native';
+
+
 module.exports = StyleSheet.create({
     label: {
         padding: 16,
@@ -23,8 +25,6 @@ module.exports = StyleSheet.create({
     },
     container: {
         flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
     },
     inner: {
         padding: 24,

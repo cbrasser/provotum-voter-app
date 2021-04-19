@@ -2,12 +2,14 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getVotes, fetchResults } from './api';
 // Async Actions (thunks)
 
-export const getElections = createAsyncThunk('elections/getElections', async (vaUrl) => {
-    let result = await getVotes(vaUrl);
-    for await (const vote of result) {
+export const getElections = createAsyncThunk('elections/getElections', async (api) => {
+
+    let result = await getVotes(api);
+    console.log(result)
+    /*for await (const vote of result) {
         let results = await fetchResults(vaUrl, vote.electionId);
         vote.results = results;
-    }
+    }*/
 
     return result;
 });

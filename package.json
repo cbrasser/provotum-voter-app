@@ -10,18 +10,30 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@polkadot/api": "^4.6.1",
+    "@polkadot/extension-dapp": "^0.37.2",
+    "@polkadot/ui-keyring": "^0.74.1",
+    "@polkadot/ui-settings": "^0.74.1",
+    "@polkadot/util": "^6.2.1",
+    "@polkadot/util-crypto": "^6.2.1",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/native": "^5.9.4",
     "@react-navigation/stack": "^5.14.4",
     "@reduxjs/toolkit": "^1.5.1",
     "axios": "^0.21.1",
+    "babel-plugin-rewrite-require": "^1.14.5",
+    "buffer": "^6.0.3",
+    "crypto-browserify": "^3.12.0",
     "react": "17.0.1",
     "react-native": "0.64.0",
+    "react-native-crypto": "^2.2.0",
     "react-native-gesture-handler": "^1.10.3",
+    "react-native-randombytes": "^3.6.0",
     "react-native-reanimated": "^2.1.0",
     "react-native-safe-area-context": "^3.2.0",
     "react-native-screens": "^3.1.1",
-    "react-redux": "^7.2.3"
+    "react-redux": "^7.2.3",
+    "stream-browserify": "^3.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

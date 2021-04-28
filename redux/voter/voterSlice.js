@@ -12,7 +12,7 @@ export const createVoterWallet = (keyring, seed = '//Voter') => (dispatch) => {
     const keyringPair = keyring.addFromUri(seed, { name: 'voter' }, 'sr25519');
     //const keyringPair = keyring.addUri(seed, '', { name: 'Voter' }, 'sr25519');
     dispatch({
-        type: 'VOTER_KEYRING_CREATED',
+        type: 'voter/VOTER_KEYRING_CREATED',
         payload: keyringPair,
     });
     return keyringPair;
@@ -30,7 +30,7 @@ export const blindAddress = (address, params) => async (dispatch) => {
     });
     console.log('blinded')
     dispatch({
-        type: 'BLIND_ADDRESS',
+        type: 'voter/BLIND_ADDRESS',
         payload: {
             address,
             blinded: blinded.toString(16),
@@ -66,7 +66,7 @@ export const blindAddress = (address, params) => async (dispatch) => {
     const signature = bnToHex(new BN(unblindSignature.toString(16), 16));
 
     dispatch({
-        type: 'ADDRESS_SIGNED',
+        type: 'voter/ADDRESS_SIGNED',
         payload: {
             address,
             unblindSignature: signature,
@@ -77,30 +77,37 @@ export const blindAddress = (address, params) => async (dispatch) => {
 };
 
 export const registerVoter = (api, signature, keyringPair) => async (dispatch) => {
+    //TODO: add check if address is already registered!
     await api.isReady;
     const tx = api.tx.provotum.registerVoter(signature);
-    tx.signAndSend(keyringPair, ({ status }) => {
-        console.log(`Current status is ${status}`);
-    });
+    try {
+        console.log('sent registration transaction')
+        let result = await tx.signAndSend(keyringPair);
+        console.log(`Current status is ${result}`);
+        dispatch({
+            type: 'voter/ADDRESS_SUBMITTED_TO_CHAIN',
+        });
+        return true;
+    } catch (e) {
+        console.log(e);
+        return false;
+    }
 
-    dispatch({
-        type: 'ADDRESS_SUBMITTED_TO_CHAIN',
-    });
+
 };
 
 export const voterSlice = createSlice({
     name: 'voter',
     initialState: {
         status: STORE_STATI.INITIAL,
-        data: {
-            keyring: null,
-            blind: {
-                address: null,
-                blinded: null,
-                blindingFactor: null,
-                params: null,
-                signature: null,
-            },
+        keyring: null,
+        blind: {
+            address: null,
+            blinded: null,
+            blindingFactor: null,
+            params: null,
+            signature: null,
+            submitted: false,
         },
     },
     reducers: {
@@ -114,6 +121,7 @@ export const voterSlice = createSlice({
             state.blind.signature = action.payload.unblindSignature;
         },
         ADDRESS_SUBMITTED_TO_CHAIN(state, action) {
+            console.log('address got submitted to chain');
             state.blind.submitted = true;
         },
     },
@@ -121,6 +129,6 @@ export const voterSlice = createSlice({
 })
 
 export const selectKeyringPair = (state) => state?.voter?.keyring;
-
+export const selectAddressSubmitted = (state) => state.voter.blind.submitted;
 //export reducer
 export default voterSlice.reducer;

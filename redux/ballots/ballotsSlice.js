@@ -1,5 +1,17 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { STORE_STATI } from './../utils';
+import { hexToBn } from '@polkadot/util';
+import {
+    computeCommitments,
+    computeResponse,
+    createRandomKeyPair,
+    encrypt,
+    generateBallotProof,
+    randomValueInRange,
+    verify as verifyBallot,
+    verifyReEncryptionProof,
+} from '@hoal/evote-crypto-ts';
+const axios = require("axios").default;
 
 /*const initState = {
     exampleAuth: { status: STORE_STATI.INITIAL, data: null },
@@ -7,8 +19,9 @@ import { STORE_STATI } from './../utils';
 };
 */
 export const castBallot = (vote, keyring, api) => async (dispatch) => {
+    console.log('preparing ballots');
     dispatch({
-        type: PREPARING_BALLOTS,
+        type: 'balllots/PREPARING_BALLOTS',
     });
 
     const { subjects, params, publicKey: publicKeyH } = vote;
@@ -17,11 +30,12 @@ export const castBallot = (vote, keyring, api) => async (dispatch) => {
         h: publicKeyH,
         parameters: params,
     };
-
+    console.log('params: ', params);
+    console.log('subjects: ', subjects);
     const [, voterPublicKey] = createRandomKeyPair(params);
-
+    console.log('got random key pair');
     const uniqueId = hexToBn(u8aToHex(keyring.pair.addressRaw));
-
+    console.log('encrypting ballots');
     const encryptedBallots = await Promise.all(
         subjects
             .filter(([, , answer]) => !!answer)
@@ -122,9 +136,9 @@ export const castBallot = (vote, keyring, api) => async (dispatch) => {
     const ballot = {
         answers: encryptedBallots,
     };
-
+    console.log('encrypted ballots');
     dispatch({
-        type: ENCRYPTED_BALLOTS,
+        type: 'ballots/ENCRYPTED_BALLOTS',
         payload: ballot,
     });
 
@@ -139,7 +153,7 @@ export const castBallot = (vote, keyring, api) => async (dispatch) => {
             if (status.isInBlock) {
                 const blockHash = status.asInBlock;
                 dispatch({
-                    type: BALLOTS_CAST,
+                    type: 'ballots/BALLOTS_CAST',
                     payload: blockHash,
                 });
             }
@@ -152,7 +166,7 @@ export const castBallot = (vote, keyring, api) => async (dispatch) => {
                     if (status.isInBlock) {
                         const blockHash = status.asInBlock;
                         dispatch({
-                            type: BALLOTS_CAST,
+                            type: 'ballots/BALLOTS_CAST',
                             payload: blockHash,
                         });
                     }

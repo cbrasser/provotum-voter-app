@@ -6,7 +6,7 @@ const axios = require("axios").default;
 
 export const setIdPParams = (params) => (dispatch) =>
     dispatch({
-        type: IDP_PARAMS,
+        type: 'IDP_PARAMS',
         payload: params,
     });
 

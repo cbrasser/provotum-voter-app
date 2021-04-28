@@ -10,6 +10,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@hoal/evote-crypto-ts": "^1.1.6",
     "@polkadot/api": "^4.6.1",
     "@polkadot/extension-dapp": "^0.37.2",
     "@polkadot/ui-keyring": "^0.74.1",

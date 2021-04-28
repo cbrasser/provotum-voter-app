@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
     View
@@ -9,7 +9,7 @@ import { TextField, Button } from 'react-native-ios-kit';
 import useSubstrate from '.././substrate-lib/useSubstrate';
 import { createVoterWallet } from './../redux/voter/voterSlice';
 import { getIdentityProviderPublicKey } from './../redux/idp/idpSlice';
-import { blindAddress, registerVoter } from './../redux/voter/voterSlice';
+import { blindAddress, registerVoter, selectAddressSubmitted } from './../redux/voter/voterSlice';
 
 const styles = require('./../style');
 //const isDarkMode = useColorScheme() === 'dark';
@@ -17,10 +17,17 @@ const styles = require('./../style');
 const Login = ({ navigation }) => {
     const [seed, setSeed] = useState('');
     const dispatch = useDispatch();
-
+    const isRegistered = useSelector(selectAddressSubmitted);
     const [isInitializing, setIsInitializing] = useState(false);
 
     const { keyring, keyringState, api } = useSubstrate();
+
+
+    useEffect(() => {
+        if (isRegistered) {
+            navigation.navigate('votes', { name: 'Jane' })
+        }
+    });
 
     const registerBySeedPhrase = async () => {
         console.log('keyringstate: ', keyringState)
@@ -41,17 +48,20 @@ const Login = ({ navigation }) => {
             const signature = await dispatch(blindAddress(voterKeyringPair.addressRaw, idpParams.payload));
 
             console.log('Registering voter');
-            dispatch(registerVoter(api, signature, voterKeyringPair));
+            const result = await dispatch(registerVoter(api, signature, voterKeyringPair));
+            console.log('result: ', result);
+            if (result) {
+                navigation.navigate('votes', { name: 'Jane' })
+            }
         }
     };
 
     const submitSeedPhrase = async () => {
-        //let result = await dispatch(registerVoter(seed));
-        //console.log(result);
-        //navigation.navigate('votes', { name: 'Jane' })
-        //console.log('seed', seed);
         registerBySeedPhrase().catch((error) => console.error(error));
     };
+    const navigateToVotes = () => {
+        navigation.navigate('votes', { name: 'Jane' })
+    }
     return (
 
         <KeyboardAvoidingView
@@ -65,6 +75,9 @@ const Login = ({ navigation }) => {
                     <View style={styles.btnContainer}>
                         <Button rounded onPress={submitSeedPhrase}>
                             Submit
+                        </Button>
+                        <Button rounded onPress={navigateToVotes}>
+                            browse without login
                         </Button>
 
                     </View>

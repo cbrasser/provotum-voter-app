@@ -169,7 +169,7 @@ export const selectSelectedVote = (state) =>
 export const selectElections = state => state.votes.votes;
 
 export const selectSelectedElection = (state) => state?.votes?.selectedVote;
-
+export const selectElectionById = (state, id) => state.votes.votes.find(v => v.electionId === id);
 
 //export reducer
 export default votesSlice.reducer;

@@ -4,8 +4,8 @@ import jsonrpc from '@polkadot/types/interfaces/jsonrpc';
 import queryString from 'query-string';
 import config from './config';
 
-const parsedQuery = queryString.parse(window.location.search);
-const connectedSocket = parsedQuery.rpc || config.PROVIDER_SOCKET;
+//const parsedQuery = queryString.parse(window.location.search);
+const connectedSocket = config.PROVIDER_SOCKET;
 console.log(`Connected socket: ${connectedSocket}`);
 console.log('Custom types', config.CUSTOM_TYPES);
 const INIT_STATE = {
@@ -28,6 +28,7 @@ const reducer = (state, action) => {
             return { ...state, socket, api: null, apiState: null };
 
         case 'CONNECT':
+            console.log('arstartrtrtarstarstarst------------------------');
             return { ...state, api: action.payload, apiState: 'CONNECTING' };
 
         case 'CONNECT_SUCCESS':

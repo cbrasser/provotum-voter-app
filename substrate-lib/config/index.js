@@ -12,4 +12,6 @@ const envVars = envVarNames.reduce((mem, n) => {
 
 const config = { ...configCommon, ...configEnv, ...envVars };
 
+window.config = config;
+
 export default config;

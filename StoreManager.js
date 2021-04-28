@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import {
-    StatusBar, SafeAreaView
+    PlatformColor
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 
@@ -8,31 +8,34 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 const Stack = createStackNavigator();
 
-import { getElections } from './redux/elections/electionSlice';
+import { getElections } from './redux/votes/votesSlice';
+
+
 import Login from './views/login';
 import Votes from './views/votes';
-//import useSubstrate from '../substrate/useSubstrate';
-const styles = require('./style');
+import Vote from './views/vote';
+import useSubstrate from './substrate-lib/useSubstrate';
 
 
-const StoreManager = (props) => {
-    console.log(props)
+const StoreManager = () => {
     const vaUrl = 'localhost:3000';
+    const providerSocket = 'ws://localhost:9944'
     const dispatch = useDispatch();
+    //let api = undefined;
+    //const substrate = useSubstrate();
+    //console.log(substrate);
+
+    const { keyring, keyringState, api } = useSubstrate();
 
     useEffect(() => {
-        console.log('loading elections')
-        dispatch(getElections(vaUrl));
-
-    }, [dispatch]);
-    //const { keyring, keyringState, api } = useSubstrate();
-
-    /*useEffect(() => {
         if (api) {
             console.log('Initializing...');
             dispatch(getElections(api));
         }
-    }, [dispatch, api]);*/
+    }, [dispatch, api]);
+
+
+
     return (
 
 
@@ -45,6 +48,24 @@ const StoreManager = (props) => {
                     options={{ title: 'Login' }}
                 />
                 <Stack.Screen name="votes" component={Votes} />
+                <Stack.Screen
+                    name="vote"
+                    component={Vote}
+                    options={({ route }) => (
+                        {
+                            title: route && route.params ? route.params.title : '',
+                            headerStyle: {
+                                backgroundColor: PlatformColor('systemTealColor'),
+                            },
+                            headerTintColor: PlatformColor('label'),
+                            headerTitleStyle: {
+                                fontWeight: 'bold',
+                            },
+                            //headerTitle: props => <Title1 {...props}>{route.params.title}</Title1>
+                        })
+                    }
+
+                />
             </Stack.Navigator>
         </NavigationContainer>
 

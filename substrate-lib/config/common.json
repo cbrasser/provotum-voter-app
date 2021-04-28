@@ -1,0 +1,70 @@
+{
+  "APP_NAME": "voter-frontend",
+  "DEVELOPMENT_KEYRING": true,
+  "RPC": {},
+  "CUSTOM_TYPES": {
+    "Address": "AccountId",
+    "LookupSource": "AccountId",
+    "ElectionId": "Vec<u8>",
+    "SubjectId": "Vec<u8>",
+    "Ballot": {
+      "answers": "Vec<(SubjectId, Cipher, BallotProof)>"
+    },
+    "BallotProof": {
+      "a0": "Vec<u8>",
+      "a1": "Vec<u8>",
+      "b0": "Vec<u8>",
+      "b1": "Vec<u8>",
+      "c0": "Vec<u8>",
+      "c1": "Vec<u8>",
+      "r0": "Vec<u8>",
+      "r1": "Vec<u8>"
+    },
+    "Cipher": {
+      "c": "Vec<u8>",
+      "d": "Vec<u8>"
+    },
+    "Election": {
+      "voting_authority": "AccountId",
+      "title": "Vec<u8>",
+      "phase": "VotePhase",
+      "params": "PublicParameters"
+    },
+    "PublicParameters": {
+      "p": "Vec<u8>",
+      "g": "Vec<u8>"
+    },
+    "VotePhase": {
+      "_enum": [
+        "DistributedKeyGeneration",
+        "Voting",
+        "Tallying"
+      ]
+    },
+    "Tally": {
+      "subject_id": "SubjectId",
+      "yes": "u32",
+      "no": "u32",
+      "total": "u32"
+    },
+    "RsaPublicKey": {
+      "exponent": "Vec<u8>",
+      "modulus": "Vec<u8>"
+    },
+    "PublicKeyShare": {
+      "public_key": "Vec<u8>",
+      "proof": "PublicKeyProof"
+    },
+    "PublicKeyProof": {
+      "challenge": "Vec<u8>",
+      "response": "Vec<u8>"
+    },
+    "DecryptedShareProof": {
+      "d": "Vec<u8>",
+      "u": "Vec<u8>",
+      "v": "Vec<u8>",
+      "s": "Vec<u8>"
+    }
+  },
+  "PROVIDER_SOCKET": "wss://dev-chain.provotum.alpm.io/"
+}

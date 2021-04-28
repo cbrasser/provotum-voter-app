@@ -25,25 +25,22 @@ module.exports = StyleSheet.create({
     },
     container: {
         flex: 1,
+        backgroundColor: PlatformColor('systemBackground')
     },
-    inner: {
-        padding: 24,
+    electionList: {
         flex: 1,
-        justifyContent: "space-around"
+        backgroundColor: PlatformColor('systemBackground')
     },
-    header: {
-        fontSize: 36,
-        marginBottom: 48
+    electionCard: {
+        backgroundColor: PlatformColor('secondarySystemBackground'),
+        padding: 25,
+        marginBottom: 5,
+        flex: 1,
     },
-    textInput: {
-        height: 40,
-        borderColor: "#000000",
-        borderBottomWidth: 1,
-        marginBottom: 36
-    },
-    btnContainer: {
-        backgroundColor: "white",
-        marginTop: 12
+    electionHeader: {}
+    ,
+    link: {
+        color: PlatformColor('link'),
     }
 });
 

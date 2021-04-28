@@ -12,8 +12,8 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		D3F2D75ACC80AF76D8885C8E /* libPods-voter_app_2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FCF9536621EFA84E33192B1 /* libPods-voter_app_2.a */; };
-		E6334FAA11BD16A0A20D01E3 /* libPods-voter_app_2-voter_app_2Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B7EB42C78D08FC97EFAD05 /* libPods-voter_app_2-voter_app_2Tests.a */; };
+		C2B9F30AE3425773F97C5A61 /* libPods-voter_app_2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 209C057677D045C982388969 /* libPods-voter_app_2.a */; };
+		E001BD9262A83786D2C2DCE0 /* libPods-voter_app_2-voter_app_2Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D81383418824C3F255F8BE2 /* libPods-voter_app_2-voter_app_2Tests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,20 +30,36 @@
 		00E356EE1AD99517003FC87E /* voter_app_2Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = voter_app_2Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* voter_app_2Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = voter_app_2Tests.m; sourceTree = "<group>"; };
-		03CAFCBCEBEF0E62DAB2FB72 /* Pods-voter_app_2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-voter_app_2.release.xcconfig"; path = "Target Support Files/Pods-voter_app_2/Pods-voter_app_2.release.xcconfig"; sourceTree = "<group>"; };
+		0117F89DDE2E40D2A5453961 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
+		037A884258B54C5FA6D68452 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
+		0DD4323E6D6E466D8162C81F /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* voter_app_2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = voter_app_2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = voter_app_2/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = voter_app_2/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = voter_app_2/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = voter_app_2/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = voter_app_2/main.m; sourceTree = "<group>"; };
-		19B7EB42C78D08FC97EFAD05 /* libPods-voter_app_2-voter_app_2Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-voter_app_2-voter_app_2Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		1FCF9536621EFA84E33192B1 /* libPods-voter_app_2.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-voter_app_2.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		5C3B4D50745B3D4D20B46478 /* Pods-voter_app_2-voter_app_2Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-voter_app_2-voter_app_2Tests.debug.xcconfig"; path = "Target Support Files/Pods-voter_app_2-voter_app_2Tests/Pods-voter_app_2-voter_app_2Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		209C057677D045C982388969 /* libPods-voter_app_2.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-voter_app_2.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3925EC8A3EEB49AFBD24FDBE /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
+		3B0D8C2545CE41DD9CC2EB1C /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
+		3D81383418824C3F255F8BE2 /* libPods-voter_app_2-voter_app_2Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-voter_app_2-voter_app_2Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		47DF174F33E3483DB34BC39D /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
+		4DAA7FA72728458B9EE54F19 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
+		512B9C7AFEC6BA4D05F220FF /* Pods-voter_app_2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-voter_app_2.release.xcconfig"; path = "Target Support Files/Pods-voter_app_2/Pods-voter_app_2.release.xcconfig"; sourceTree = "<group>"; };
+		567CCA8868ED4566B023D249 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
+		5B804D8D06584A71867EE57C /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
+		5EE3F18390944CE3BF04F495 /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = voter_app_2/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		8CFA6076F320CCBC540206F8 /* Pods-voter_app_2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-voter_app_2.debug.xcconfig"; path = "Target Support Files/Pods-voter_app_2/Pods-voter_app_2.debug.xcconfig"; sourceTree = "<group>"; };
-		96B467F359026F81382CD7FD /* Pods-voter_app_2-voter_app_2Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-voter_app_2-voter_app_2Tests.release.xcconfig"; path = "Target Support Files/Pods-voter_app_2-voter_app_2Tests/Pods-voter_app_2-voter_app_2Tests.release.xcconfig"; sourceTree = "<group>"; };
+		A40C651678394D72BEB605E3 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
+		B8F731BF6D965A0CDC82E538 /* Pods-voter_app_2-voter_app_2Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-voter_app_2-voter_app_2Tests.debug.xcconfig"; path = "Target Support Files/Pods-voter_app_2-voter_app_2Tests/Pods-voter_app_2-voter_app_2Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		CFBC65C05F384713952F8322 /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
+		DB18A00DBA0A4702A0B6DD58 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
+		DE1DC0DBC74A4843BB64B8B0 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
+		E304726B13CB62CE1A559F3D /* Pods-voter_app_2-voter_app_2Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-voter_app_2-voter_app_2Tests.release.xcconfig"; path = "Target Support Files/Pods-voter_app_2-voter_app_2Tests/Pods-voter_app_2-voter_app_2Tests.release.xcconfig"; sourceTree = "<group>"; };
+		E9B3DF0CC8614D68AE2E9F35 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		FC32DE0752DE4BD3B231C507 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
+		FCAB91AF724556D39DDC09C4 /* Pods-voter_app_2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-voter_app_2.debug.xcconfig"; path = "Target Support Files/Pods-voter_app_2/Pods-voter_app_2.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,7 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E6334FAA11BD16A0A20D01E3 /* libPods-voter_app_2-voter_app_2Tests.a in Frameworks */,
+				E001BD9262A83786D2C2DCE0 /* libPods-voter_app_2-voter_app_2Tests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,7 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D3F2D75ACC80AF76D8885C8E /* libPods-voter_app_2.a in Frameworks */,
+				C2B9F30AE3425773F97C5A61 /* libPods-voter_app_2.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,10 +116,33 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				1FCF9536621EFA84E33192B1 /* libPods-voter_app_2.a */,
-				19B7EB42C78D08FC97EFAD05 /* libPods-voter_app_2-voter_app_2Tests.a */,
+				209C057677D045C982388969 /* libPods-voter_app_2.a */,
+				3D81383418824C3F255F8BE2 /* libPods-voter_app_2-voter_app_2Tests.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3FCC37C028FB45F887350A90 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				CFBC65C05F384713952F8322 /* AntDesign.ttf */,
+				037A884258B54C5FA6D68452 /* Entypo.ttf */,
+				3B0D8C2545CE41DD9CC2EB1C /* EvilIcons.ttf */,
+				5B804D8D06584A71867EE57C /* Feather.ttf */,
+				4DAA7FA72728458B9EE54F19 /* FontAwesome.ttf */,
+				FC32DE0752DE4BD3B231C507 /* FontAwesome5_Brands.ttf */,
+				0117F89DDE2E40D2A5453961 /* FontAwesome5_Regular.ttf */,
+				DE1DC0DBC74A4843BB64B8B0 /* FontAwesome5_Solid.ttf */,
+				5EE3F18390944CE3BF04F495 /* Fontisto.ttf */,
+				0DD4323E6D6E466D8162C81F /* Foundation.ttf */,
+				567CCA8868ED4566B023D249 /* Ionicons.ttf */,
+				E9B3DF0CC8614D68AE2E9F35 /* MaterialCommunityIcons.ttf */,
+				DB18A00DBA0A4702A0B6DD58 /* MaterialIcons.ttf */,
+				47DF174F33E3483DB34BC39D /* Octicons.ttf */,
+				A40C651678394D72BEB605E3 /* SimpleLineIcons.ttf */,
+				3925EC8A3EEB49AFBD24FDBE /* Zocial.ttf */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -122,6 +161,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				9752847C431F8ADD2EA84D13 /* Pods */,
+				3FCC37C028FB45F887350A90 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -140,12 +180,11 @@
 		9752847C431F8ADD2EA84D13 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				8CFA6076F320CCBC540206F8 /* Pods-voter_app_2.debug.xcconfig */,
-				03CAFCBCEBEF0E62DAB2FB72 /* Pods-voter_app_2.release.xcconfig */,
-				5C3B4D50745B3D4D20B46478 /* Pods-voter_app_2-voter_app_2Tests.debug.xcconfig */,
-				96B467F359026F81382CD7FD /* Pods-voter_app_2-voter_app_2Tests.release.xcconfig */,
+				FCAB91AF724556D39DDC09C4 /* Pods-voter_app_2.debug.xcconfig */,
+				512B9C7AFEC6BA4D05F220FF /* Pods-voter_app_2.release.xcconfig */,
+				B8F731BF6D965A0CDC82E538 /* Pods-voter_app_2-voter_app_2Tests.debug.xcconfig */,
+				E304726B13CB62CE1A559F3D /* Pods-voter_app_2-voter_app_2Tests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -156,12 +195,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "voter_app_2Tests" */;
 			buildPhases = (
-				488C271EF2DA519604D59EB0 /* [CP] Check Pods Manifest.lock */,
+				96058698C8497CEE18052856 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				006E89AAD2C9A7A993960210 /* [CP] Embed Pods Frameworks */,
-				7320CF02DBF1CB2E9865FDEC /* [CP] Copy Pods Resources */,
+				8FC0D75354228E058024F499 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -177,14 +215,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "voter_app_2" */;
 			buildPhases = (
-				C3FE20BE653860C73775AF92 /* [CP] Check Pods Manifest.lock */,
+				41342BDBE1EF0FBB17BA87A6 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				22BC2D3073D435658836AF50 /* [CP] Embed Pods Frameworks */,
-				4C676CED525E22B2AA4A7AF7 /* [CP] Copy Pods Resources */,
+				45557FD6394389AAB5EF961A /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -251,23 +288,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		006E89AAD2C9A7A993960210 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-voter_app_2-voter_app_2Tests/Pods-voter_app_2-voter_app_2Tests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-voter_app_2-voter_app_2Tests/Pods-voter_app_2-voter_app_2Tests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-voter_app_2-voter_app_2Tests/Pods-voter_app_2-voter_app_2Tests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -282,24 +302,7 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nexport NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
-		22BC2D3073D435658836AF50 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-voter_app_2/Pods-voter_app_2-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-voter_app_2/Pods-voter_app_2-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-voter_app_2/Pods-voter_app_2-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		488C271EF2DA519604D59EB0 /* [CP] Check Pods Manifest.lock */ = {
+		41342BDBE1EF0FBB17BA87A6 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -314,14 +317,14 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-voter_app_2-voter_app_2Tests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-voter_app_2-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		4C676CED525E22B2AA4A7AF7 /* [CP] Copy Pods Resources */ = {
+		45557FD6394389AAB5EF961A /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -338,7 +341,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-voter_app_2/Pods-voter_app_2-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		7320CF02DBF1CB2E9865FDEC /* [CP] Copy Pods Resources */ = {
+		8FC0D75354228E058024F499 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -355,7 +358,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-voter_app_2-voter_app_2Tests/Pods-voter_app_2-voter_app_2Tests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C3FE20BE653860C73775AF92 /* [CP] Check Pods Manifest.lock */ = {
+		96058698C8497CEE18052856 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -370,7 +373,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-voter_app_2-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-voter_app_2-voter_app_2Tests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -429,7 +432,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5C3B4D50745B3D4D20B46478 /* Pods-voter_app_2-voter_app_2Tests.debug.xcconfig */;
+			baseConfigurationReference = B8F731BF6D965A0CDC82E538 /* Pods-voter_app_2-voter_app_2Tests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -456,7 +459,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 96B467F359026F81382CD7FD /* Pods-voter_app_2-voter_app_2Tests.release.xcconfig */;
+			baseConfigurationReference = E304726B13CB62CE1A559F3D /* Pods-voter_app_2-voter_app_2Tests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -480,7 +483,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8CFA6076F320CCBC540206F8 /* Pods-voter_app_2.debug.xcconfig */;
+			baseConfigurationReference = FCAB91AF724556D39DDC09C4 /* Pods-voter_app_2.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -506,7 +509,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 03CAFCBCEBEF0E62DAB2FB72 /* Pods-voter_app_2.release.xcconfig */;
+			baseConfigurationReference = 512B9C7AFEC6BA4D05F220FF /* Pods-voter_app_2.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;

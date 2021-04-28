@@ -12,6 +12,7 @@ target 'voter_app_2' do
     :hermes_enabled => false
   )
 
+
   target 'voter_app_2Tests' do
     inherit! :complete
     # Pods for testing

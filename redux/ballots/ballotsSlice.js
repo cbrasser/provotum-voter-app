@@ -30,8 +30,8 @@ export const castBallot = (vote, keyring, api) => async (dispatch) => {
         h: publicKeyH,
         parameters: params,
     };
-    console.log('params: ', params);
-    console.log('subjects: ', subjects);
+
+
     const [, voterPublicKey] = createRandomKeyPair(params);
     console.log('got random key pair');
     const uniqueId = hexToBn(u8aToHex(keyring.pair.addressRaw));

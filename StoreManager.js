@@ -35,7 +35,6 @@ const StoreManager = () => {
     }, [dispatch, api]);
 
 
-
     return (
 
 
@@ -45,7 +44,7 @@ const StoreManager = () => {
 
                     name="Login"
                     component={Login}
-                    options={{ title: 'Login' }}
+                    options={{ title: 'Login', name: 'Login' }}
                 />
                 <Stack.Screen name="votes" component={Votes} />
                 <Stack.Screen

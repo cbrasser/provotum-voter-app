@@ -10,6 +10,7 @@ import useSubstrate from '.././substrate-lib/useSubstrate';
 import { createVoterWallet } from './../redux/voter/voterSlice';
 import { getIdentityProviderPublicKey } from './../redux/idp/idpSlice';
 import { blindAddress, registerVoter, selectAddressSubmitted } from './../redux/voter/voterSlice';
+import * as Keychain from 'react-native-keychain';
 
 const styles = require('./../style');
 //const isDarkMode = useColorScheme() === 'dark';
@@ -50,6 +51,8 @@ const Login = ({ navigation }) => {
             console.log('Registering voter');
             const result = await dispatch(registerVoter(api, signature, voterKeyringPair));
             console.log('result: ', result);
+            await Keychain.setGenericPassword('someUsername', seed);
+
             if (result) {
                 navigation.navigate('votes', { name: 'Jane' })
             }
@@ -59,6 +62,18 @@ const Login = ({ navigation }) => {
     const submitSeedPhrase = async () => {
         registerBySeedPhrase().catch((error) => console.error(error));
     };
+    const loadFromKeychain = async () => {
+        try {
+            const credentials = await Keychain.getGenericPassword();
+            if (credentials) {
+                console.log(credentials);
+            } else {
+                console.log('no credentials stored')
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
     const navigateToVotes = () => {
         navigation.navigate('votes', { name: 'Jane' })
     }
@@ -75,6 +90,9 @@ const Login = ({ navigation }) => {
                     <View style={styles.btnContainer}>
                         <Button rounded onPress={submitSeedPhrase}>
                             Submit
+                        </Button>
+                        <Button rounded onPress={loadFromKeychain}>
+                            load from device
                         </Button>
                         <Button rounded onPress={navigateToVotes}>
                             browse without login

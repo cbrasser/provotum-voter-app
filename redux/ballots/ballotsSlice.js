@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { STORE_STATI } from './../utils';
-import { hexToBn } from '@polkadot/util';
+import { bnToHex, hexToBn, u8aToHex } from '@polkadot/util';
 import {
     computeCommitments,
     computeResponse,
@@ -19,7 +19,6 @@ const axios = require("axios").default;
 };
 */
 export const castBallot = (vote, keyring, api) => async (dispatch) => {
-    console.log('preparing ballots');
     dispatch({
         type: 'balllots/PREPARING_BALLOTS',
     });
@@ -31,10 +30,10 @@ export const castBallot = (vote, keyring, api) => async (dispatch) => {
         parameters: params,
     };
 
-
+    console.log('preparing ballots, params: ', params);
     const [, voterPublicKey] = createRandomKeyPair(params);
     console.log('got random key pair');
-    const uniqueId = hexToBn(u8aToHex(keyring.pair.addressRaw));
+    const uniqueId = hexToBn(u8aToHex(keyring.addressRaw));
     console.log('encrypting ballots');
     const encryptedBallots = await Promise.all(
         subjects
@@ -145,9 +144,9 @@ export const castBallot = (vote, keyring, api) => async (dispatch) => {
     await api.isReady;
     try {
         const tx = api.tx.provotum.castBallot(vote.electionId, ballot);
-        console.log(`Sending tx`);
+        console.log(`Sending tx, keyring: `, keyring);
 
-        tx.signAndSend(keyring.pair, ({ status }) => {
+        tx.signAndSend(keyring, ({ status }) => {
             console.log(`Current status is ${status}`);
 
             if (status.isInBlock) {
@@ -161,7 +160,7 @@ export const castBallot = (vote, keyring, api) => async (dispatch) => {
             console.error('Failed to submit extrinsic. Waiting 2s and re-attempting', err);
 
             setTimeout(() => {
-                tx.signAndSend(keyring.pair, ({ status }) => {
+                tx.signAndSend(keyring, ({ status }) => {
                     console.log(`Current status is ${status}`);
                     if (status.isInBlock) {
                         const blockHash = status.asInBlock;

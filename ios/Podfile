@@ -13,6 +13,8 @@ target 'voter_app_2' do
   )
 
 
+  pod 'react-native-randombytes', :path => '../node_modules/react-native-randombytes'
+
   target 'voter_app_2Tests' do
     inherit! :complete
     # Pods for testing

@@ -42,31 +42,7 @@ const App: () => Node = () => {
             </StoreManager>
           </Provider>
         </SafeAreaView>
-        <TabBar
-          tabs={[
-            {
-              title: 'News',
-              onPress: selectTab,
-              isActive: activeTab === 0,
-            },
-            {
-              title: 'Scores',
-              onPress: selectTab,
-              isActive: activeTab === 1,
-            },
-            {
-              title: 'Favorites',
-              onPress: selectTab,
-              isActive: activeTab === 2,
-            },
-            {
-              title: 'Disabled',
-              onPress: selectTab,
-              isActive: activeTab === 3,
-              disabled: true,
-            },
-          ]}
-        />
+
       </SubstrateContextProvider>
 
     </ThemeProvider>

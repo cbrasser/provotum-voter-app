@@ -76,6 +76,25 @@ export const blindAddress = (address, params) => async (dispatch) => {
     return signature;
 };
 
+export const voterIsRegistered = (api, keyringPair) => async (dispatch) => {
+    await api.isReady;
+    try {
+        let response = await api.query.provotum.voters(keyringPair.address);
+        console.log('resp: ', response);
+        if (response != "0x") {
+            dispatch({
+                type: 'voter/ADDRESS_SUBMITTED_TO_CHAIN',
+            });
+            return true;
+        }
+        return false;
+
+    } catch (e) {
+        console.log(e);
+    }
+
+}
+
 export const registerVoter = (api, signature, keyringPair) => async (dispatch) => {
     //TODO: add check if address is already registered!
     await api.isReady;
@@ -83,6 +102,9 @@ export const registerVoter = (api, signature, keyringPair) => async (dispatch) =
     try {
         console.log('sent registration transaction')
         let result = await tx.signAndSend(keyringPair);
+        console.log('result from registering: ', result);
+        let test_response = await api.query.provotum.voters.entries();
+        console.log('resp: ', test_response);
         console.log(`Current status is ${result}`);
         dispatch({
             type: 'voter/ADDRESS_SUBMITTED_TO_CHAIN',
@@ -128,7 +150,7 @@ export const voterSlice = createSlice({
     extraReducers: {}
 })
 
-export const selectKeyringPair = (state) => state?.voter?.keyring;
+export const selectKeyringPair = (state) => state.voter.keyring;
 export const selectAddressSubmitted = (state) => state.voter.blind.submitted;
 //export reducer
 export default voterSlice.reducer;

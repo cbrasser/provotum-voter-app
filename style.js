@@ -27,6 +27,12 @@ module.exports = StyleSheet.create({
         flex: 1,
         backgroundColor: PlatformColor('systemBackground')
     },
+    centered: {
+        flex: 1,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
     electionList: {
         flex: 1,
         backgroundColor: PlatformColor('systemBackground')

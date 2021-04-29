@@ -1,6 +1,8 @@
 /**
  * @format
  */
+import './shim.js'
+import crypto from 'crypto'
 
 import { AppRegistry } from 'react-native';
 

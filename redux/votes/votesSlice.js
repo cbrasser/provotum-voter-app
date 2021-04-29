@@ -10,9 +10,9 @@ export const subscribeToResults = (api, voteId) => async (dispatch) => {
             ...result,
             subjectId: result.subject_id,
         }));
-        console.log(tallies);
+        console.log('tallies', tallies);
         dispatch({
-            type: 'RESULTS_AVAILABLE',
+            type: 'votes/RESULTS_AVAILABLE',
             payload: {
                 voteId,
                 results: tallies,
@@ -61,9 +61,9 @@ export const getElections = createAsyncThunk('votes/getElections', async (api, t
                     electionId,
                     ...election,
                     params: {
-                        p: String(hexToBn(election.params.p)),
-                        g: String(hexToBn(election.params.g)),
-                        q: String(hexToBn(election.params.p).subn(1).divn(2)),
+                        p: hexToBn(election.params.p),
+                        g: hexToBn(election.params.g),
+                        q: hexToBn(election.params.p).subn(1).divn(2),
                     },
                     subjects: subjectsResponse.toHuman(),
                     publicKey: String(hexToBn(publicKeyResponse.toHuman())),
@@ -128,7 +128,8 @@ export const votesSlice = createSlice({
             state.votes = votes;
         },
         RESULTS_AVAILABLE(state, action) {
-            state.results = action.payload
+            state.votes.find(v => v.electionId === action.payload.voteId).results = action.payload.results;
+            //state.results = action.payload
         },
     },
     extraReducers: {

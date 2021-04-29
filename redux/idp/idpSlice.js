@@ -11,19 +11,18 @@ export const setIdPParams = (params) => (dispatch) =>
     });
 
 export const getIdentityProviderPublicKey = createAsyncThunk('idp/getIdentityProviderPublicKey', async () => {
-    console.log('sending request to: ', idpAPIUrl);
     try {
         const response = await axios.get('/signatures', {
             baseURL: idpAPIUrl,
         });
-        console.log('response: ', response.data);
+        //console.log('response: ', response.data);
         const params = response.data;
         const idpParams = {
             exponent: hexToBn(params.exponent),
             modulus: hexToBn(params.modulus),
             alg: params.alg,
         };
-        console.log('IDP Params', idpParams);
+        //console.log('IDP Params', idpParams);
         return idpParams;
     } catch (e) {
         console.log(e);

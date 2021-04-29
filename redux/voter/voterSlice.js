@@ -79,24 +79,16 @@ export const blindAddress = (address, params) => async (dispatch) => {
 export const voterIsRegistered = (api, keyringPair) => async (dispatch) => {
     await api.isReady;
     try {
-        console.log(keyringPair);
-        console.log(keyringPair.publicKey)
-
-        let response = await api.query.provotum.elections.entries();
-        console.log('resp: ', response);
-        response = await api.query.provotum.tallies.entries();
-        console.log('resp: ', response);
-        response = await api.query.provotum.voters.entries();
+        let response = await api.query.provotum.voters(keyringPair.address);
         console.log('resp: ', response);
         if (response != "0x") {
             dispatch({
                 type: 'voter/ADDRESS_SUBMITTED_TO_CHAIN',
             });
             return true;
-
-        } else {
-            return false;
         }
+        return false;
+
     } catch (e) {
         console.log(e);
     }

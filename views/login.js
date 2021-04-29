@@ -33,7 +33,7 @@ const Login = ({ navigation }) => {
 
     useEffect(async () => {
         await loadFromKeychain();
-        await wait(3000);
+        await wait(1000);
         setinitPhase(1);
         await wait(1000);
         // if there is a seed stored in the keystore use it and check if it has already been signed and stored
@@ -42,7 +42,7 @@ const Login = ({ navigation }) => {
             setinitPhase(2);
             console.log('loading wallet');
             const wallet = await initializeVoterWallet();
-            await wait(3000);
+            await wait(1000);
             console.log('checking if address is registered on the chain');
             let addressOnChain = await checkAddressOnBlockchain(wallet);
             // if the address has already been signed and stored everything is ready and the user 
@@ -50,24 +50,35 @@ const Login = ({ navigation }) => {
             if (addressOnChain) {
                 console.log('voter already registered on BC')
                 setinitPhase(3);
-                await wait(3000);
+                await wait(1000);
                 navigation.navigate('votes', { name: 'Jane' })
                 // else sign and store the address first
             } else {
+                setinitPhase(5);
+                await wait(1000);
                 console.log('voter not yet on BC, blinding and registering')
                 console.log('Fetching identity provider public key');
                 const idpParams = await dispatch(getIdentityProviderPublicKey());
-
+                setinitPhase(6);
+                await wait(1000);
                 console.log('Blinding wallet and sending it to the IdP for signing');
                 const signature = await dispatch(blindAddress(wallet.addressRaw, idpParams.payload));
-
+                setinitPhase(7);
+                await wait(1000);
                 const result = await dispatch(registerVoter(api, signature, wallet));
                 console.log('result: ', result);
+                if (result) {
+                    setinitPhase(8);
+                    await wait(1000);
+                    setinitPhase(3)
+                    navigation.navigate('votes', { name: 'Jane' })
+                }
             }
             //let test = await registerBySeedPhrase(false);
             // else wait for the user to manually submitt a seed
         } else {
-            console.log('no seed on device')
+            setinitPhase(4);
+            console.log('no seed on device');
         }
 
 
@@ -82,7 +93,7 @@ const Login = ({ navigation }) => {
     */
 
     const initializeVoterWallet = async () => {
-        let wallet = await dispatch(createVoterWallet(keyring, `//${seed}arstffffb`));
+        let wallet = await dispatch(createVoterWallet(keyring, `//${seed}asdsf`));
         return wallet;
     }
 
@@ -180,7 +191,7 @@ const Login = ({ navigation }) => {
                             <Body>Found your credentials</Body>
                         </View>
                     )}
-                    {(initPhase === 1 && !seedStoredOnDevice) && (
+                    {(initPhase === 4) && (
                         <View>
                             <Spinner animating={true} size='large' />
                             <Body>Could not get your credentials from the device</Body>
@@ -204,15 +215,36 @@ const Login = ({ navigation }) => {
                                 color={'blue'}
                             />
                             <Body>You are registered on the blockchain</Body>
+                            <Button rounded onPress={navigateToVotes}>
+                                browse votes
+                        </Button>
                         </View>
                     )}
-                    <View style={styles.btnContainer}>
+                    {initPhase === 5 && (
+                        <View>
+                            <Spinner animating={true} size='large' />
+                            <Body>Contacting the identity provider</Body>
+                        </View>
+                    )}
+                    {initPhase === 6 && (
+                        <View>
+                            <Spinner animating={true} size='large' />
+                            <Body>securely blinding your address</Body>
+                        </View>
+                    )}
+                    {initPhase === 7 && (
+                        <View>
+                            <Spinner animating={true} size='large' />
+                            <Body>Registrating your voter address with the Blockchain</Body>
+                        </View>
+                    )}
+                    {initPhase === 8 && (
+                        <View>
+                            <Spinner animating={true} size='large' />
+                            <Body>Loading votes</Body>
+                        </View>
+                    )}
 
-                        <Button rounded onPress={navigateToVotes}>
-                            browse without login
-                        </Button>
-
-                    </View>
                 </View>
             </TouchableWithoutFeedback>
         </KeyboardAvoidingView>

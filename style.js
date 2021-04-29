@@ -27,11 +27,16 @@ module.exports = StyleSheet.create({
         flex: 1,
         backgroundColor: PlatformColor('systemBackground')
     },
-    centered: {
+    login: {
         flex: 1,
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: PlatformColor('systemPink'),
+        color: PlatformColor('secondaryLabel')
+    },
+    colorLight: {
+        color: PlatformColor('quaternaryLabel'),
     },
     electionList: {
         flex: 1,

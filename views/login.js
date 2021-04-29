@@ -11,12 +11,12 @@ import { createVoterWallet } from './../redux/voter/voterSlice';
 import { getIdentityProviderPublicKey } from './../redux/idp/idpSlice';
 import { selectKeyringPair, blindAddress, registerVoter, selectAddressSubmitted, voterIsRegistered } from './../redux/voter/voterSlice';
 import * as Keychain from 'react-native-keychain';
-import { Spinner, Body, Icon } from 'react-native-ios-kit';
+import { Body, Icon } from 'react-native-ios-kit';
 import { sign } from 'blind-signatures';
+var Spinner = require('react-native-spinkit');
 
 const styles = require('./../style');
 //const isDarkMode = useColorScheme() === 'dark';
-
 const Login = ({ navigation }) => {
     const [seed, setSeed] = useState('');
     const dispatch = useDispatch();
@@ -29,6 +29,11 @@ const Login = ({ navigation }) => {
 
     const wait = (milliseconds) => {
         return new Promise(resolve => setTimeout(resolve, milliseconds));
+    }
+
+    const getRandomSpinner = () => {
+        const spinnerTypes = ['CircleFlip', 'Bounce', 'Wave', 'WanderingCubes', 'Pulse', 'ChasingDots', 'ThreeBounce', 'Circle', '9CubeGrid', 'WordPress', 'FadingCircle', 'FadingCircleAlt', 'Arc', 'ArcAlt'];
+        return spinnerTypes[Math.floor((Math.random() * spinnerTypes.length))]
     }
 
     useEffect(async () => {
@@ -93,7 +98,7 @@ const Login = ({ navigation }) => {
     */
 
     const initializeVoterWallet = async () => {
-        let wallet = await dispatch(createVoterWallet(keyring, `//${seed}asdsf`));
+        let wallet = await dispatch(createVoterWallet(keyring, `//${seed}asdsfaa`));
         return wallet;
     }
 
@@ -103,7 +108,7 @@ const Login = ({ navigation }) => {
         return result;
     }
 
-    const registerBySeedPhrase = async (isNewSeed) => {
+    const registerBySeedPhrase = async () => {
         //console.log('keyringstate: ', keyringState)
         //console.log('keyring: ', keyring);
         //console.log('is initializing: ', isInitializing);
@@ -125,15 +130,14 @@ const Login = ({ navigation }) => {
             const result = await dispatch(registerVoter(api, signature, voterKeyringPair));
             console.log('result: ', result);
 
-            if (isNewSeed) {
-                await Keychain.setGenericPassword('someUsername', seed, {
-                    accessControl: Keychain.ACCESS_CONTROL.BIOMETRY_CURRENT_SET,
-                    //securityLevel: Keychain.SECURITY_LEVEL.SECURE_HARDWARE,
-                    //storage: Keychain.STORAGE_TYPE.AES,
-                    authenticationType: Keychain.AUTHENTICATION_TYPE.BIOMETRICS,
-                    biometryType: Keychain.BIOMETRY_TYPE.FACE_ID
-                });
-            }
+            await Keychain.setGenericPassword('someUsername', seed, {
+                accessControl: Keychain.ACCESS_CONTROL.BIOMETRY_CURRENT_SET,
+                //securityLevel: Keychain.SECURITY_LEVEL.SECURE_HARDWARE,
+                //storage: Keychain.STORAGE_TYPE.AES,
+                authenticationType: Keychain.AUTHENTICATION_TYPE.BIOMETRICS,
+                biometryType: Keychain.BIOMETRY_TYPE.FACE_ID
+            });
+
             return result;
         }
     };
@@ -171,13 +175,13 @@ const Login = ({ navigation }) => {
 
         <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : "height"}
-            style={styles.centered}
+            style={styles.login}
         >
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} >
                 <View style={styles.inner}>
                     {initPhase === 0 && (
                         <View>
-                            <Spinner animating={true} size='large' />
+                            <Spinner style={styles.spinner} isVisible={true} size={40} type={() => getRandomSpinner()} />
                             <Body>Looking for your credentials</Body>
                         </View>
                     )}
@@ -193,7 +197,7 @@ const Login = ({ navigation }) => {
                     )}
                     {(initPhase === 4) && (
                         <View>
-                            <Spinner animating={true} size='large' />
+                            <Spinner style={styles.spinner} isVisible={true} size={40} type={() => getRandomSpinner()} />
                             <Body>Could not get your credentials from the device</Body>
                             <TextField value={seed} onValueChange={(v) => { setSeed(v) }} placeholder="Seed" style={styles.textInput} />
                             <Button rounded onPress={submitSeedPhrase}>
@@ -203,7 +207,7 @@ const Login = ({ navigation }) => {
                     )}
                     {initPhase === 2 && (
                         <View>
-                            <Spinner animating={true} size='large' />
+                            <Spinner style={styles.spinner} isVisible={true} size={40} type={() => getRandomSpinner()} />
                             <Body>Searching for you on the blockchain</Body>
                         </View>
                     )}
@@ -214,7 +218,7 @@ const Login = ({ navigation }) => {
                                 size={30}
                                 color={'blue'}
                             />
-                            <Body>You are registered on the blockchain</Body>
+                            <Body style={styles.colorLight}>You are registered on the blockchain</Body>
                             <Button rounded onPress={navigateToVotes}>
                                 browse votes
                         </Button>
@@ -222,25 +226,25 @@ const Login = ({ navigation }) => {
                     )}
                     {initPhase === 5 && (
                         <View>
-                            <Spinner animating={true} size='large' />
+                            <Spinner style={styles.spinner} isVisible={true} size={40} type={() => getRandomSpinner()} />
                             <Body>Contacting the identity provider</Body>
                         </View>
                     )}
                     {initPhase === 6 && (
                         <View>
-                            <Spinner animating={true} size='large' />
+                            <Spinner style={styles.spinner} isVisible={true} size={40} type={() => getRandomSpinner()} />
                             <Body>securely blinding your address</Body>
                         </View>
                     )}
                     {initPhase === 7 && (
                         <View>
-                            <Spinner animating={true} size='large' />
+                            <Spinner style={styles.spinner} isVisible={true} size={40} type={() => getRandomSpinner()} />
                             <Body>Registrating your voter address with the Blockchain</Body>
                         </View>
                     )}
                     {initPhase === 8 && (
                         <View>
-                            <Spinner animating={true} size='large' />
+                            <Spinner style={styles.spinner} isVisible={true} size={40} type={() => getRandomSpinner()} />
                             <Body>Loading votes</Body>
                         </View>
                     )}

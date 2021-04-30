@@ -1,0 +1,58 @@
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { Text, TouchableOpacity, FlatList, View, ActionSheetIOS, PlatformColor } from 'react-native';
+import { Title1, Title3, Body, Button } from 'react-native-ios-kit'
+import { selectElectionById, selectElectionSubject, selectSubjectResults } from '../redux/votes/votesSlice';
+import { VictoryLabel, VictoryTooltip, VictoryBar, VictoryChart, VictoryTheme, VictoryPie } from "victory-native";
+
+const styles = require('./../style');
+
+
+const wait = (milliseconds) => {
+    return new Promise(resolve => setTimeout(resolve, milliseconds));
+}
+
+const Vote = ({ navigation, route }) => {
+    const voteId = route.params.voteId;
+    const subjectId = route.params.subjectId;
+    const election = useSelector((state) => selectElectionById(state, voteId));
+    const subject = useSelector((state) => selectElectionSubject(state, voteId, subjectId))
+    const results = useSelector((state) => selectSubjectResults(state, voteId, subjectId));
+    const [data, setData] = useState([
+        { y: 1, x: 'no', label: "yes" },
+        { y: 1, x: 'yes', label: "no" },
+    ]);
+
+
+    useEffect(async () => {
+        await wait(1000);
+        setData([
+            { y: results.yes, x: 'no', label: "yes", color: 'red' },
+            { y: results.no, x: 'yes', label: "no" },
+        ])
+
+    }, [setData]);
+
+    return (
+        <View style={styles.container}>
+            <View style={styles.textContainer}>
+                <Title1 style={styles.title1} >{subject[1]}</Title1>
+                <VictoryPie
+                    animate={{
+                        duration: 2000
+                    }}
+                    colorScale={["#1EC337", "tomato"]}
+                    data={data}
+                />
+
+            </View>
+
+        </View>
+
+    )
+};
+
+
+
+export default Vote;

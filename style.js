@@ -23,20 +23,48 @@ module.exports = StyleSheet.create({
             default: { color: 'black' }
         })
     },
+    title1: {
+        marginTop: 20,
+        marginBottom: 15,
+    },
+    electionInfo: {
+        marginBottom: 20,
+    },
     container: {
         flex: 1,
-        backgroundColor: PlatformColor('systemBackground')
+        backgroundColor: PlatformColor('systemBackground'),
+    },
+    textContainer: {
+        paddingLeft: 10,
+        paddingRight: 10,
+    },
+    centerinfocontainer: {
+        flex: 1,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     login: {
         flex: 1,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: PlatformColor('systemPink'),
-        color: PlatformColor('secondaryLabel')
+        backgroundColor: PlatformColor('systemBackground')
     },
-    colorLight: {
-        color: PlatformColor('quaternaryLabel'),
+    loginView: {
+        flex: 0.5,
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    connectedIcon: {
+        marginBottom: 10,
+    },
+    loginText: {
+        marginBottom: 100,
+    },
+    spinner: {
+        color: '#467b9d',
     },
     electionList: {
         flex: 1,

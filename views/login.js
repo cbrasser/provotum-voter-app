@@ -20,12 +20,13 @@ const styles = require('./../style');
 const Login = ({ navigation }) => {
     const [seed, setSeed] = useState('');
     const dispatch = useDispatch();
+
     const [initPhase, setinitPhase] = useState(0);
     const isRegistered = useSelector(selectAddressSubmitted);
     const [seedStoredOnDevice, setSeedStoredOnDevice] = useState(false);
     const [isInitializing, setIsInitializing] = useState(false);
     //const voterWallet = useSelector(selectKeyringPair)
-    const { keyring, keyringState, api } = useSubstrate();
+    const { keyring, keyringState, api, apiState } = useSubstrate();
 
     const wait = (milliseconds) => {
         return new Promise(resolve => setTimeout(resolve, milliseconds));
@@ -39,8 +40,13 @@ const Login = ({ navigation }) => {
     useEffect(async () => {
         await loadFromKeychain();
         await wait(1000);
-        setinitPhase(1);
-        await wait(1000);
+        if (seedStoredOnDevice) {
+            setinitPhase(1);
+            await wait(1000);
+        }
+
+        console.log(apiState);
+        console.log('seed on dev: ', seedStoredOnDevice)
         // if there is a seed stored in the keystore use it and check if it has already been signed and stored
         if (seedStoredOnDevice) {
             console.log('seed is on device')
@@ -143,7 +149,12 @@ const Login = ({ navigation }) => {
     };
 
     const submitSeedPhrase = async () => {
-        registerBySeedPhrase().catch((error) => console.error(error));
+        let result = registerBySeedPhrase().catch((error) => console.error(error));
+        if (result) {
+            setinitPhase(3);
+            navigation.navigate('votes', { name: 'Jane' })
+
+        }
     };
     const loadFromKeychain = async () => {
         const options = {
@@ -178,27 +189,27 @@ const Login = ({ navigation }) => {
             style={styles.login}
         >
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} >
-                <View style={styles.inner}>
+                <View>
                     {initPhase === 0 && (
-                        <View>
+                        <View style={styles.loginView}>
                             <Spinner style={styles.spinner} isVisible={true} size={40} type={() => getRandomSpinner()} />
-                            <Body>Looking for your credentials</Body>
+                            <Body style={styles.loginText}>Looking for your credentials</Body>
                         </View>
                     )}
-                    {(initPhase === 1 && seedStoredOnDevice) && (
-                        <View>
+                    {initPhase === 1 && (
+                        <View style={styles.loginView}>
                             <Icon
                                 name={'ios-map-outline'}
                                 size={30}
                                 color={'blue'}
                             />
-                            <Body>Found your credentials</Body>
+                            <Body style={styles.loginText}>Found your credentials</Body>
                         </View>
                     )}
                     {(initPhase === 4) && (
-                        <View>
+                        <View style={styles.loginView}>
                             <Spinner style={styles.spinner} isVisible={true} size={40} type={() => getRandomSpinner()} />
-                            <Body>Could not get your credentials from the device</Body>
+                            <Body style={styles.loginText}>Could not get your credentials from the device</Body>
                             <TextField value={seed} onValueChange={(v) => { setSeed(v) }} placeholder="Seed" style={styles.textInput} />
                             <Button rounded onPress={submitSeedPhrase}>
                                 Submit
@@ -206,48 +217,51 @@ const Login = ({ navigation }) => {
                         </View>
                     )}
                     {initPhase === 2 && (
-                        <View>
+                        <View style={styles.loginView}>
                             <Spinner style={styles.spinner} isVisible={true} size={40} type={() => getRandomSpinner()} />
-                            <Body>Searching for you on the blockchain</Body>
+                            <Body style={styles.loginText}>Searching for you on the blockchain</Body>
                         </View>
                     )}
                     {initPhase === 3 && (
-                        <View>
-                            <Icon
-                                name={'ios-map-outline'}
-                                size={30}
-                                color={'blue'}
-                            />
-                            <Body style={styles.colorLight}>You are registered on the blockchain</Body>
+                        <View style={styles.loginView}>
+                            <Spinner style={styles.spinner} isVisible={true} size={40} type='Pulse' />
+                            <Body style={styles.loginText}>You are registered on the blockchain</Body>
                             <Button rounded onPress={navigateToVotes}>
                                 browse votes
                         </Button>
                         </View>
                     )}
                     {initPhase === 5 && (
-                        <View>
+                        <View style={styles.loginView}>
                             <Spinner style={styles.spinner} isVisible={true} size={40} type={() => getRandomSpinner()} />
-                            <Body>Contacting the identity provider</Body>
+                            <Body style={styles.loginText}>Contacting the identity provider</Body>
                         </View>
                     )}
                     {initPhase === 6 && (
-                        <View>
+                        <View style={styles.loginView}>
                             <Spinner style={styles.spinner} isVisible={true} size={40} type={() => getRandomSpinner()} />
-                            <Body>securely blinding your address</Body>
+                            <Body style={styles.loginText}>securely blinding your address</Body>
                         </View>
                     )}
                     {initPhase === 7 && (
-                        <View>
+                        <View style={styles.loginView}>
                             <Spinner style={styles.spinner} isVisible={true} size={40} type={() => getRandomSpinner()} />
-                            <Body>Registrating your voter address with the Blockchain</Body>
+                            <Body style={styles.loginText}>Registrating your voter address with the Blockchain</Body>
                         </View>
                     )}
                     {initPhase === 8 && (
-                        <View>
+                        <View style={styles.loginView}>
                             <Spinner style={styles.spinner} isVisible={true} size={40} type={() => getRandomSpinner()} />
-                            <Body>Loading votes</Body>
+                            <Body style={styles.loginText}>Loading votes</Body>
                         </View>
                     )}
+                    {initPhase === -1 && (
+                        <View style={styles.loginView}>
+                            <Spinner style={styles.spinner} isVisible={true} size={40} type={() => getRandomSpinner()} />
+                            <Body style={styles.loginText}>you are disconnected from the blockchain</Body>
+                        </View>
+                    )}
+
 
                 </View>
             </TouchableWithoutFeedback>

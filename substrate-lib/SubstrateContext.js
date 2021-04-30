@@ -6,8 +6,6 @@ import config from './config';
 
 //const parsedQuery = queryString.parse(window.location.search);
 const connectedSocket = config.PROVIDER_SOCKET;
-console.log(`Connected socket: ${connectedSocket}`);
-console.log('Custom types', config.CUSTOM_TYPES);
 const INIT_STATE = {
     socket: connectedSocket,
     jsonrpc: { ...jsonrpc, ...config.RPC },
@@ -28,7 +26,6 @@ const reducer = (state, action) => {
             return { ...state, socket, api: null, apiState: null };
 
         case 'CONNECT':
-            console.log('arstartrtrtarstarstarst------------------------');
             return { ...state, api: action.payload, apiState: 'CONNECTING' };
 
         case 'CONNECT_SUCCESS':

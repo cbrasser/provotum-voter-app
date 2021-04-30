@@ -171,6 +171,7 @@ export const selectElections = state => state.votes.votes;
 
 export const selectSelectedElection = (state) => state?.votes?.selectedVote;
 export const selectElectionById = (state, id) => state.votes.votes.find(v => v.electionId === id);
-
+export const selectElectionSubject = (state, voteId, subjectId) => state.votes.votes.find(v => v.electionId === voteId).subjects.find(s => s[0] === subjectId);
+export const selectSubjectResults = (state, voteId, subjectId) => state.votes.votes.find(v => v.electionId === voteId).results.find(r => r.subjectId === subjectId);
 //export reducer
 export default votesSlice.reducer;

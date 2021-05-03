@@ -9,10 +9,12 @@ import { TextField, Button } from 'react-native-ios-kit';
 import useSubstrate from '.././substrate-lib/useSubstrate';
 import { createVoterWallet } from './../redux/voter/voterSlice';
 import { getIdentityProviderPublicKey } from './../redux/idp/idpSlice';
-import { selectKeyringPair, blindAddress, registerVoter, selectAddressSubmitted, voterIsRegistered } from './../redux/voter/voterSlice';
+import { selectKeyringPair, loadCastBallots, blindAddress, registerVoter, selectAddressSubmitted, voterIsRegistered } from './../redux/voter/voterSlice';
 import * as Keychain from 'react-native-keychain';
 import { Body, Icon } from 'react-native-ios-kit';
 import { sign } from 'blind-signatures';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 var Spinner = require('react-native-spinkit');
 
 const styles = require('./../style');
@@ -38,12 +40,15 @@ const Login = ({ navigation }) => {
     }
 
     useEffect(async () => {
+        console.log('loading cast ballots');
+        await dispatch(loadCastBallots());
         await loadFromKeychain();
         await wait(1000);
         if (seedStoredOnDevice) {
             setinitPhase(1);
             await wait(1000);
         }
+
 
         console.log(apiState);
         console.log('seed on dev: ', seedStoredOnDevice)

@@ -19,21 +19,22 @@ const Vote = ({ navigation, route }) => {
     const election = useSelector((state) => selectElectionById(state, voteId));
     const subject = useSelector((state) => selectElectionSubject(state, voteId, subjectId))
     const results = useSelector((state) => selectSubjectResults(state, voteId, subjectId));
+
     const [data, setData] = useState([
-        { y: 1, x: 'no', label: "yes" },
-        { y: 1, x: 'yes', label: "no" },
+        { y: 1, x: 'yes', label: "yes" },
+        { y: 1, x: 'no', label: "no" },
     ]);
 
 
     useEffect(async () => {
         await wait(1000);
         setData([
-            { y: results.yes, x: 'no', label: "yes", color: 'red' },
-            { y: results.no, x: 'yes', label: "no" },
+            { y: results.yes, x: 'yes', label: 'yes' },
+            { y: results.no, x: 'no', label: 'no' },
         ])
-
     }, [setData]);
 
+    //TODO: display link to finalization block of tally
     return (
         <View style={styles.container}>
             <View style={styles.textContainer}>

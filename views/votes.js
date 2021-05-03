@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { Text, TouchableOpacity, FlatList, View } from 'react-native';
 import { Headline, SearchBar, NavigationRow, SegmentedControl, TableView } from 'react-native-ios-kit'
 import { selectElections } from '../redux/votes/votesSlice';
+import { selectBallotForVote } from './../redux/voter/voterSlice';
 const styles = require('./../style');
 
 
@@ -41,12 +42,22 @@ const Votes = ({ navigation }) => {
     //console.log('elections arrived on FE: ', elections)
     // const renderElections = elections.map(e => (<View><Text>{e.title}</Text></View>))
 
-    const ElectionCard = ({ title, id }) => (
-        <NavigationRow
+    const ElectionCard = ({ title, id }) => {
+        const ballot = useSelector((state) => selectBallotForVote(state, id));
+        if (ballot) {
+            return (
+                <NavigationRow
+                    title={title}
+                    info={'voted'}
+                    onPress={() => { viewElection(id, title) }}
+                />
+            );
+        }
+        return (<NavigationRow
             title={title}
             onPress={() => { viewElection(id, title) }}
-        />
-    );
+        />);
+    };
 
     const renderElections = filteredElections().map(e => (
         <ElectionCard key={e.electionId} title={e.title} id={e.electionId} />

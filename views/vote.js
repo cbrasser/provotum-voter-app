@@ -4,21 +4,28 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Text, TouchableOpacity, FlatList, View, ActionSheetIOS } from 'react-native';
 import { Title1, Title3, Body, Button } from 'react-native-ios-kit'
 import { selectElectionById } from '../redux/votes/votesSlice';
-import { selectAddressSubmitted, selectKeyringPair } from './../redux/voter/voterSlice';
+import { selectAddressSubmitted, selectKeyringPair, selectVotesWithCastBallot, selectBallotForVote } from './../redux/voter/voterSlice';
 import { answerSubject, subscribeToResults } from './../redux/votes/votesSlice';
+import { selectBallotsState, selectBallotSubmitted, selectBlockHash } from './../redux/ballots/ballotsSlice';
 import { castBallot } from './../redux/ballots/ballotsSlice';
 import useSubstrate from './../substrate-lib/useSubstrate';
 import { SwitchRow, NavigationRow, InfoRow, RowItem, TableView } from 'react-native-ios-kit';
-
+import BallotConfirmation from '../components/BallotConfirmation';
+import BallotLoading from './../components/BallotLoading';
 const styles = require('./../style');
 
 
 const Vote = ({ navigation, route }) => {
     const userIsRegistered = useSelector(selectAddressSubmitted);
     const id = route.params.id;
+    const keyring = useSelector(selectKeyringPair);
     const election = useSelector((state) => selectElectionById(state, id));
     const keyringPair = useSelector(selectKeyringPair);
     const { api, apiState } = useSubstrate();
+    const ballot = useSelector((state) => selectBallotForVote(state, election.electionId));
+    const ballotState = useSelector(selectBallotsState);
+
+    console.log('ballot: ', ballot);
 
     const dispatch = useDispatch();
     //console.log(election);
@@ -69,7 +76,7 @@ const Vote = ({ navigation, route }) => {
 
         const resultInfo = () => {
             if (!election.results) {
-                return '';
+                return ' ';
             }
             let results = election.results.find(r => r.subjectId === id);
             console.log('results: ', results);
@@ -78,11 +85,18 @@ const Vote = ({ navigation, route }) => {
 
         switch (election.phase) {
             case 'Voting':
-                return (<SwitchRow
-                    title={title}
-                    value={selectedAnswer}
-                    onValueChange={value => bufferSubjectAnswer(id, value)}
-                />)
+                if (!ballot) {
+                    return (<SwitchRow
+                        title={title}
+                        value={selectedAnswer}
+                        onValueChange={value => bufferSubjectAnswer(id, value)}
+                    />)
+                } else {
+                    return (<RowItem
+                        title={title}
+                    />)
+                }
+
                 break;
             case 'DistributedKeyGeneration':
                 return (<RowItem
@@ -94,7 +108,7 @@ const Vote = ({ navigation, route }) => {
                 return (
                     <NavigationRow
                         title={title}
-                        subtitle={resultInfo}
+                        subtitle={resultInfo()}
                         onPress={() => viewSubject(election.electionId, id)}
                     />
                 )
@@ -133,7 +147,7 @@ const Vote = ({ navigation, route }) => {
                 {renderSubjects}
             </TableView>
 
-            {(userIsRegistered && election.phase === 'Voting') ? (
+            {(userIsRegistered && election.phase === 'Voting' && !ballot) ? (
                 <View>
                     <Button rounded onPress={() => { castVote() }}>
                         Submitt
@@ -147,6 +161,8 @@ const Vote = ({ navigation, route }) => {
                         </Button>
                 </View>
             ) : null}
+            {ballot ? (<BallotConfirmation ballot={ballot}></BallotConfirmation>) : null}
+            {(!ballot && ballotState === 'PENDING') ? (<BallotLoading />) : null}
 
         </View>
 

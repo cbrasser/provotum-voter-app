@@ -30,11 +30,9 @@ export const answerSubject = (voteId, subjectId, answer) => (dispatch) =>
 export const selectVote = (voteId) => (dispatch) => dispatch({ type: VOTE_SELECTED, payload: voteId });
 
 export const getElections = createAsyncThunk('votes/getElections', async (api, thunkAPI) => {
-    //console.log('fetching elections', thunkAPI);
     thunkAPI.dispatch({ type: 'ELECTIONS_PENDING' });
-
     await api.isReady;
-    //console.log('asdfasf');
+
     await api.query.provotum.elections.entries(async (response) => {
         const elections = await Promise.all(
             response.map(async ([key, electionEncoded]) => {
@@ -70,7 +68,6 @@ export const getElections = createAsyncThunk('votes/getElections', async (api, t
                 };
             }),
         );
-        //console.log('fetched elections: ', elections)
         //return elections;
         thunkAPI.dispatch({
             type: 'votes/ELECTIONS_SUCCESS',

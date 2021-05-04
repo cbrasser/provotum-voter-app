@@ -15,6 +15,7 @@ import Login from './views/login';
 import Votes from './views/votes';
 import Vote from './views/vote';
 import Subject from './views/subject';
+import Intro from './views/Intro';
 import useSubstrate from './substrate-lib/useSubstrate';
 
 
@@ -48,6 +49,7 @@ const StoreManager = () => {
                     options={{ title: 'Provotum', name: 'Login' }}
                 />
                 <Stack.Screen name="votes" component={Votes} />
+                <Stack.Screen name="intro" component={Intro} />
                 <Stack.Screen
                     name="vote"
                     component={Vote}

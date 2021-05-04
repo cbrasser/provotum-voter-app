@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
     View
 } from 'react-native';
-import { useColorScheme, StatusBar, SafeAreaView, KeyboardAvoidingView, TextInput, Text, Platform, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { useColorScheme, StatusBar, SafeAreaView, KeyboardAvoidingView, TextInput, Text, Platform, TouchableWithoutFeedback, Keyboard, Image } from 'react-native';
 import { TextField, Button } from 'react-native-ios-kit';
 import useSubstrate from '.././substrate-lib/useSubstrate';
 import { createVoterWallet } from './../redux/voter/voterSlice';
@@ -12,8 +12,6 @@ import { getIdentityProviderPublicKey } from './../redux/idp/idpSlice';
 import { selectKeyringPair, loadCastBallots, blindAddress, registerVoter, selectAddressSubmitted, voterIsRegistered } from './../redux/voter/voterSlice';
 import * as Keychain from 'react-native-keychain';
 import { Body, Icon } from 'react-native-ios-kit';
-import { sign } from 'blind-signatures';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 var Spinner = require('react-native-spinkit');
 
@@ -34,11 +32,11 @@ const Login = ({ navigation }) => {
         return new Promise(resolve => setTimeout(resolve, milliseconds));
     }
 
-    const getRandomSpinner = () => {
+    /*const getRandomSpinner = () => {
         const spinnerTypes = ['CircleFlip', 'Bounce', 'Wave', 'WanderingCubes', 'Pulse', 'ChasingDots', 'ThreeBounce', 'Circle', '9CubeGrid', 'WordPress', 'FadingCircle', 'FadingCircleAlt', 'Arc', 'ArcAlt'];
         return spinnerTypes[Math.floor((Math.random() * spinnerTypes.length))]
-    }
-
+    }*/
+    console.log('hey im the login component')
     useEffect(async () => {
         console.log('loading cast ballots');
         await dispatch(loadCastBallots());
@@ -67,7 +65,7 @@ const Login = ({ navigation }) => {
                 console.log('voter already registered on BC')
                 setinitPhase(3);
                 await wait(1000);
-                navigation.navigate('votes', { name: 'Jane' })
+                //navigation.navigate('votes', { name: 'Jane' })
                 // else sign and store the address first
             } else {
                 setinitPhase(5);
@@ -87,7 +85,7 @@ const Login = ({ navigation }) => {
                     setinitPhase(8);
                     await wait(1000);
                     setinitPhase(3)
-                    navigation.navigate('votes', { name: 'Jane' })
+                    //navigation.navigate('votes', { name: 'Jane' })
                 }
             }
             //let test = await registerBySeedPhrase(false);
@@ -187,17 +185,30 @@ const Login = ({ navigation }) => {
     const navigateToVotes = () => {
         navigation.navigate('votes', { name: 'Jane' })
     }
+    const navigateToIntro = () => {
+        navigation.navigate('intro')
+    }
     return (
 
         <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : "height"}
             style={styles.login}
         >
+            <Button
+                style={styles.helpButton}
+                onPress={navigateToIntro}
+            >
+                <Icon
+                    name={'ios-help-circle-outline'}
+                    size={30}
+                    color={'blue'}
+                />
+            </Button>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} >
                 <View>
                     {initPhase === 0 && (
                         <View style={styles.loginView}>
-                            <Spinner style={styles.spinner} isVisible={true} size={40} type={() => getRandomSpinner()} />
+                            <Spinner style={styles.spinner} isVisible={true} size={40} type={'wave'} />
                             <Body style={styles.loginText}>Looking for your credentials</Body>
                         </View>
                     )}
@@ -213,7 +224,7 @@ const Login = ({ navigation }) => {
                     )}
                     {(initPhase === 4) && (
                         <View style={styles.loginView}>
-                            <Spinner style={styles.spinner} isVisible={true} size={40} type={() => getRandomSpinner()} />
+                            <Spinner style={styles.spinner} isVisible={true} size={40} type={'wave'} />
                             <Body style={styles.loginText}>Could not get your credentials from the device</Body>
                             <TextField value={seed} onValueChange={(v) => { setSeed(v) }} placeholder="Seed" style={styles.textInput} />
                             <Button rounded onPress={submitSeedPhrase}>
@@ -223,13 +234,16 @@ const Login = ({ navigation }) => {
                     )}
                     {initPhase === 2 && (
                         <View style={styles.loginView}>
-                            <Spinner style={styles.spinner} isVisible={true} size={40} type={() => getRandomSpinner()} />
+                            <Spinner style={styles.spinner} isVisible={true} size={40} type={'wave'} />
                             <Body style={styles.loginText}>Searching for you on the blockchain</Body>
                         </View>
                     )}
                     {initPhase === 3 && (
                         <View style={styles.loginView}>
-                            <Spinner style={styles.spinner} isVisible={true} size={40} type='Pulse' />
+                            <Image
+                                style={styles.checkImage}
+                                source={require('./../assets/check.gif')}
+                            />
                             <Body style={styles.loginText}>You are registered on the blockchain</Body>
                             <Button rounded onPress={navigateToVotes}>
                                 browse votes
@@ -238,31 +252,31 @@ const Login = ({ navigation }) => {
                     )}
                     {initPhase === 5 && (
                         <View style={styles.loginView}>
-                            <Spinner style={styles.spinner} isVisible={true} size={40} type={() => getRandomSpinner()} />
+                            <Spinner style={styles.spinner} isVisible={true} size={40} type={'wave'} />
                             <Body style={styles.loginText}>Contacting the identity provider</Body>
                         </View>
                     )}
                     {initPhase === 6 && (
                         <View style={styles.loginView}>
-                            <Spinner style={styles.spinner} isVisible={true} size={40} type={() => getRandomSpinner()} />
+                            <Spinner style={styles.spinner} isVisible={true} size={40} type={'wave'} />
                             <Body style={styles.loginText}>securely blinding your address</Body>
                         </View>
                     )}
                     {initPhase === 7 && (
                         <View style={styles.loginView}>
-                            <Spinner style={styles.spinner} isVisible={true} size={40} type={() => getRandomSpinner()} />
+                            <Spinner style={styles.spinner} isVisible={true} size={40} type={'wave'} />
                             <Body style={styles.loginText}>Registrating your voter address with the Blockchain</Body>
                         </View>
                     )}
                     {initPhase === 8 && (
                         <View style={styles.loginView}>
-                            <Spinner style={styles.spinner} isVisible={true} size={40} type={() => getRandomSpinner()} />
+                            <Spinner style={styles.spinner} isVisible={true} size={40} type={'wave'} />
                             <Body style={styles.loginText}>Loading votes</Body>
                         </View>
                     )}
                     {initPhase === -1 && (
                         <View style={styles.loginView}>
-                            <Spinner style={styles.spinner} isVisible={true} size={40} type={() => getRandomSpinner()} />
+                            <Spinner style={styles.spinner} isVisible={true} size={40} type={'wave'} />
                             <Body style={styles.loginText}>you are disconnected from the blockchain</Body>
                         </View>
                     )}

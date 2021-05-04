@@ -79,11 +79,21 @@ export const blindAddress = (address, params) => async (dispatch) => {
 };
 
 export const loadCastBallots = () => async (dispatch) => {
-    let castVotes = await AsyncStorage.getItem('BALLOTS');
+    let castVotes = [];
+    try {
+        castVotes = await AsyncStorage.getItem('BALLOTS');
+    } catch (e) {
+        console.log('errori', e)
+        //console.log(e);
+    }
+    console.log('test');
     castVotes = JSON.parse(castVotes);
+    console.log('intermediate test', castVotes);
     if (!castVotes) {
         castVotes = [];
+        console.log('new test');
         await AsyncStorage.setItem('BALLOTS', JSON.stringify([]));
+        console.log('even newer test');
     }
     console.log('loaded cast ballots: ', castVotes);
     dispatch({

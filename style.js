@@ -70,6 +70,35 @@ module.exports = StyleSheet.create({
         flex: 1,
         backgroundColor: PlatformColor('systemBackground')
     },
+    helpButton: {
+        position: 'absolute',
+        top: 5,
+        right: 5
+    },
+    intro: {
+        flex: 1,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: PlatformColor('systemBackground'),
+    },
+    introSlide: {
+        flex: 1,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: PlatformColor('systemBackground'),
+    },
+    networkImage: {
+        maxWidth: '100%',
+        resizeMode: 'contain',
+        //flex: 1,
+    },
+    checkImage: {
+        //maxWidth: '60%',
+        height: 70,
+        resizeMode: 'contain'
+    },
     electionCard: {
         backgroundColor: PlatformColor('secondarySystemBackground'),
         padding: 25,

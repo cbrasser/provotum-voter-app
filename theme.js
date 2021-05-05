@@ -6,9 +6,10 @@ import {
 
 export default theme = {
     ...DefaultTheme,
-    primaryColor: 'tomato',
-    primaryLightColor: color('tomato').lighten(0.2).rgb().string(),
-    disabledColor: 'yellow',
+    primaryColor: '#BF616A',
+    disabledColor: '#EBCB8B',
+    backgroundColor: PlatformColor('systemBackground'),
+    barColor: PlatformColor('systemBackground')
 };
 
 /*

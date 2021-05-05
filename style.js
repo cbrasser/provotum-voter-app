@@ -23,19 +23,85 @@ module.exports = StyleSheet.create({
             default: { color: 'black' }
         })
     },
+    title1: {
+        marginTop: 20,
+        marginBottom: 15,
+    },
+    electionInfo: {
+        marginBottom: 20,
+    },
     container: {
         flex: 1,
-        backgroundColor: PlatformColor('systemBackground')
+        backgroundColor: PlatformColor('systemBackground'),
     },
-    centered: {
+    textContainer: {
+        paddingLeft: 10,
+        paddingRight: 10,
+    },
+    centerinfocontainer: {
         flex: 1,
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+    },
+    login: {
+        flex: 1,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: PlatformColor('systemBackground')
+    },
+    loginView: {
+        flex: 0.5,
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    connectedIcon: {
+        marginBottom: 10,
+    },
+    loginText: {
+        marginBottom: 100,
+    },
+    spinner: {
+        color: '#467b9d',
     },
     electionList: {
         flex: 1,
         backgroundColor: PlatformColor('systemBackground')
+    },
+    helpButton: {
+        position: 'absolute',
+        top: 5,
+        right: 5
+    },
+    intro: {
+        flex: 1,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: PlatformColor('systemBackground'),
+    },
+    introSlide: {
+        flex: 1,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: PlatformColor('systemBackground'),
+    },
+    networkImage: {
+        maxWidth: '100%',
+        resizeMode: 'contain',
+        //flex: 1,
+    },
+    checkImage: {
+        //maxWidth: '60%',
+        height: 70,
+        resizeMode: 'contain'
+    },
+    voteImage: {
+        height: 200,
+        resizeMode: 'contain'
     },
     electionCard: {
         backgroundColor: PlatformColor('secondarySystemBackground'),

@@ -30,11 +30,9 @@ export const answerSubject = (voteId, subjectId, answer) => (dispatch) =>
 export const selectVote = (voteId) => (dispatch) => dispatch({ type: VOTE_SELECTED, payload: voteId });
 
 export const getElections = createAsyncThunk('votes/getElections', async (api, thunkAPI) => {
-    //console.log('fetching elections', thunkAPI);
     thunkAPI.dispatch({ type: 'ELECTIONS_PENDING' });
-
     await api.isReady;
-    //console.log('asdfasf');
+
     await api.query.provotum.elections.entries(async (response) => {
         const elections = await Promise.all(
             response.map(async ([key, electionEncoded]) => {
@@ -70,7 +68,6 @@ export const getElections = createAsyncThunk('votes/getElections', async (api, t
                 };
             }),
         );
-        //console.log('fetched elections: ', elections)
         //return elections;
         thunkAPI.dispatch({
             type: 'votes/ELECTIONS_SUCCESS',
@@ -171,6 +168,13 @@ export const selectElections = state => state.votes.votes;
 
 export const selectSelectedElection = (state) => state?.votes?.selectedVote;
 export const selectElectionById = (state, id) => state.votes.votes.find(v => v.electionId === id);
-
+export const selectElectionSubject = (state, voteId, subjectId) => state.votes.votes.find(v => v.electionId === voteId).subjects.find(s => s[0] === subjectId);
+export const selectSubjectResults = (state, voteId, subjectId) => state.votes.votes.find(v => v.electionId === voteId).results.map(r => {
+    return {
+        ...r,
+        yes: Number(r.yes.replaceAll(',', '')),
+        no: Number(r.no.replaceAll(',', '')),
+    }
+}).find(r => r.subjectId === subjectId);
 //export reducer
 export default votesSlice.reducer;

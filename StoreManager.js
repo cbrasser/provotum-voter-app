@@ -14,6 +14,8 @@ import { getElections } from './redux/votes/votesSlice';
 import Login from './views/login';
 import Votes from './views/votes';
 import Vote from './views/vote';
+import Subject from './views/subject';
+import Intro from './views/Intro';
 import useSubstrate from './substrate-lib/useSubstrate';
 
 
@@ -44,9 +46,10 @@ const StoreManager = () => {
 
                     name="Login"
                     component={Login}
-                    options={{ title: 'Login', name: 'Login' }}
+                    options={{ title: 'Provotum', name: 'Login' }}
                 />
                 <Stack.Screen name="votes" component={Votes} />
+                <Stack.Screen name="intro" component={Intro} />
                 <Stack.Screen
                     name="vote"
                     component={Vote}
@@ -54,11 +57,31 @@ const StoreManager = () => {
                         {
                             title: route && route.params ? route.params.title : '',
                             headerStyle: {
-                                backgroundColor: PlatformColor('systemTealColor'),
+                                backgroundColor: PlatformColor('systemBackground'),
                             },
                             headerTintColor: PlatformColor('label'),
                             headerTitleStyle: {
                                 fontWeight: 'bold',
+                                display: 'none',
+                            },
+                            //headerTitle: props => <Title1 {...props}>{route.params.title}</Title1>
+                        })
+                    }
+
+                />
+                <Stack.Screen
+                    name="subject"
+                    component={Subject}
+                    options={({ route }) => (
+                        {
+                            title: route && route.params ? route.params.title : '',
+                            headerStyle: {
+                                backgroundColor: PlatformColor('systemBackground'),
+                            },
+                            headerTintColor: PlatformColor('label'),
+                            headerTitleStyle: {
+                                fontWeight: 'bold',
+                                display: 'none',
                             },
                             //headerTitle: props => <Title1 {...props}>{route.params.title}</Title1>
                         })

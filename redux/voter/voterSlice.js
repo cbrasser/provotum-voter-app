@@ -6,6 +6,8 @@ import { blind, unblind, verify } from 'blind-signatures';
 const axios = require("axios").default;
 import { bnToHex } from '@polkadot/util';
 import BN from 'bn.js';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { castBallot } from '../ballots/ballotsSlice';
 
 export const createVoterWallet = (keyring, seed = '//Voter') => (dispatch) => {
     console.log('creating a wallet with seed: ', seed);
@@ -76,11 +78,36 @@ export const blindAddress = (address, params) => async (dispatch) => {
     return signature;
 };
 
+export const loadCastBallots = () => async (dispatch) => {
+    let castVotes = [];
+    try {
+        castVotes = await AsyncStorage.getItem('BALLOTS');
+    } catch (e) {
+        console.log('errori', e)
+        //console.log(e);
+    }
+    console.log('test');
+    castVotes = JSON.parse(castVotes);
+    //console.log('intermediate test', castVotes);
+    if (!castVotes) {
+        castVotes = [];
+        console.log('new test');
+        await AsyncStorage.setItem('BALLOTS', JSON.stringify([]));
+        console.log('even newer test');
+    }
+    console.log('loaded cast ballots: ', castVotes);
+    dispatch({
+        type: 'voter/CAST_BALLOTS',
+        payload: castVotes
+    });
+}
+
 export const voterIsRegistered = (api, keyringPair) => async (dispatch) => {
     await api.isReady;
     try {
         let response = await api.query.provotum.voters(keyringPair.address);
-        console.log('resp: ', response);
+        //console.log('resp: ', response);
+        //console.log('user address: ', keyringPair.address);
         if (response != "0x") {
             dispatch({
                 type: 'voter/ADDRESS_SUBMITTED_TO_CHAIN',
@@ -95,6 +122,8 @@ export const voterIsRegistered = (api, keyringPair) => async (dispatch) => {
 
 }
 
+
+
 export const registerVoter = (api, signature, keyringPair) => async (dispatch) => {
     //TODO: add check if address is already registered!
     await api.isReady;
@@ -102,10 +131,7 @@ export const registerVoter = (api, signature, keyringPair) => async (dispatch) =
     try {
         console.log('sent registration transaction')
         let result = await tx.signAndSend(keyringPair);
-        console.log('result from registering: ', result);
-        let test_response = await api.query.provotum.voters.entries();
-        console.log('resp: ', test_response);
-        console.log(`Current status is ${result}`);
+
         dispatch({
             type: 'voter/ADDRESS_SUBMITTED_TO_CHAIN',
         });
@@ -131,6 +157,7 @@ export const voterSlice = createSlice({
             signature: null,
             submitted: false,
         },
+        castBallots: [],
     },
     reducers: {
         VOTER_KEYRING_CREATED(state, action) {
@@ -146,10 +173,29 @@ export const voterSlice = createSlice({
             console.log('address got submitted to chain');
             state.blind.submitted = true;
         },
+        CAST_BALLOTS(state, action) {
+            console.log('setting cast ballots: ', action.payload);
+            action.payload.forEach(b => {
+                if (!state.castBallots.find(bb => bb.blockHash === b.blockHash)) {
+                    state.castBallots.push(b);
+                }
+            });
+            try {
+                AsyncStorage.setItem(
+                    'BALLOTS',
+                    JSON.stringify(state.castBallots)
+                );
+            } catch (error) {
+                console.log(error)
+            }
+            //state.castBallots = action.payload
+        }
     },
     extraReducers: {}
 })
 
+export const selectBallotForVote = (state, voteId) => state.voter.castBallots.find(b => b.address === state.voter.keyring.address && b.voteId === voteId);
+export const selectVotesWithCastBallot = (state) => state.voter.castBallots.filter(b => b.address === state.voter.keyring.address);
 export const selectKeyringPair = (state) => state.voter.keyring;
 export const selectAddressSubmitted = (state) => state.voter.blind.submitted;
 //export reducer

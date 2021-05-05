@@ -12,7 +12,6 @@ import type { Node } from 'react';
 import {
   StatusBar, SafeAreaView
 } from 'react-native';
-import { TabBar } from 'react-native-ios-kit';
 
 
 const styles = require('./style');
@@ -27,8 +26,6 @@ import { SubstrateContextProvider } from './substrate-lib';
 
 const App: () => Node = () => {
 
-  selectTab = () => { };
-  const [activeTab, setactiveTab] = useState(0);
 
   return (
     <ThemeProvider theme={theme}>

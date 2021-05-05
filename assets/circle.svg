@@ -1,0 +1,19 @@
+<svg width="242" height="239" viewBox="0 0 242 239" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M20 144H4C2.89543 144 2 144.895 2 146V156C2 157.105 2.89543 158 4 158H20C21.1046 158 22 157.105 22 156V146C22 144.895 21.1046 144 20 144Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M8 162H16" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12 158V162" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M194 184H178C176.895 184 176 184.895 176 186V196C176 197.105 176.895 198 178 198H194C195.105 198 196 197.105 196 196V186C196 184.895 195.105 184 194 184Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M182 202H190" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M186 198V202" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M24 56H14C12.8954 56 12 56.8954 12 58V74C12 75.1046 12.8954 76 14 76H24C25.1046 76 26 75.1046 26 74V58C26 56.8954 25.1046 56 24 56Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M19 72H19.01" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M100 2H90C88.8954 2 88 2.89543 88 4V20C88 21.1046 88.8954 22 90 22H100C101.105 22 102 21.1046 102 20V4C102 2.89543 101.105 2 100 2Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M95 18H95.01" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M179 24H169C167.895 24 167 24.8954 167 26V42C167 43.1046 167.895 44 169 44H179C180.105 44 181 43.1046 181 42V26C181 24.8954 180.105 24 179 24Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M174 40H174.01" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M223 96H213C211.895 96 211 96.8954 211 98V114C211 115.105 211.895 116 213 116H223C224.105 116 225 115.105 225 114V98C225 96.8954 224.105 96 223 96Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M218 112H218.01" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M88 207H78C76.8954 207 76 207.895 76 209V225C76 226.105 76.8954 227 78 227H88C89.1046 227 90 226.105 90 225V209C90 207.895 89.1046 207 88 207Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M83 223H83.01" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="112.5" cy="117.5" r="105" stroke="black"/>
+</svg>

@@ -1,5 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { STORE_STATI } from './../utils';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
 import { bnToHex, hexToBn, u8aToHex } from '@polkadot/util';
 import {
     computeCommitments,
@@ -13,16 +16,14 @@ import {
 } from '@hoal/evote-crypto-ts';
 const axios = require("axios").default;
 
-/*const initState = {
-    exampleAuth: { status: STORE_STATI.INITIAL, data: null },
-    votingAuth: { status: STORE_STATI.INITIAL, data: null },
-};
-*/
+
+
+
 export const castBallot = (vote, keyring, api) => async (dispatch) => {
     dispatch({
-        type: 'balllots/PREPARING_BALLOTS',
+        type: 'ballots/PREPARING_BALLOTS',
     });
-
+    console.log('vote: ', keyring)
     const { subjects, params, publicKey: publicKeyH } = vote;
 
     const publicKey = {
@@ -145,29 +146,46 @@ export const castBallot = (vote, keyring, api) => async (dispatch) => {
     try {
         const tx = api.tx.provotum.castBallot(vote.electionId, ballot);
         console.log(`Sending tx, keyring: `, keyring);
-
-        tx.signAndSend(keyring, ({ status }) => {
+        tx.signAndSend(keyring, async ({ status }) => {
             console.log(`Current status is ${status}`);
 
             if (status.isInBlock) {
                 const blockHash = status.asInBlock;
-                dispatch({
+                console.log('transaction blockhash: ', blockHash);
+                await dispatch({
                     type: 'ballots/BALLOTS_CAST',
-                    payload: blockHash,
+                    payload: blockHash
                 });
+                await dispatch({
+                    type: 'voter/CAST_BALLOTS',
+                    payload: [{
+                        'blockHash': blockHash,
+                        'voteId': vote.electionId,
+                        'address': keyring.address,
+                    }],
+                })
+
             }
         }).catch((err) => {
             console.error('Failed to submit extrinsic. Waiting 2s and re-attempting', err);
 
             setTimeout(() => {
-                tx.signAndSend(keyring, ({ status }) => {
+                tx.signAndSend(keyring, async ({ status }) => {
                     console.log(`Current status is ${status}`);
                     if (status.isInBlock) {
                         const blockHash = status.asInBlock;
-                        dispatch({
+                        await dispatch({
                             type: 'ballots/BALLOTS_CAST',
-                            payload: blockHash,
+                            payload: blockHash
                         });
+                        await dispatch({
+                            type: 'voter/CAST_BALLOTS',
+                            payload: [{
+                                'blockHash': blockHash,
+                                'voteId': vote.electionId,
+                                'address': keyring.address,
+                            }],
+                        })
                     }
                 });
             }, 2000);
@@ -186,6 +204,11 @@ export const ballotsSlice = createSlice({
         submitted: false,
     },
     reducers: {
+        RESET_BALLOTS(state, action) {
+            state.status = STORE_STATI.INITIAL;
+            state.submitted = false;
+            ballots = [];
+        },
         PREPARING_BALLOTS(state, action) {
             state.status = STORE_STATI.PENDING;
         },
@@ -194,11 +217,11 @@ export const ballotsSlice = createSlice({
         ENCRYPTED_BALLOTS(state, action) {
             state.submitted = false;
             state.ballots = action.payload;
-            state.status = STORE_STATI.SUCCESS;
         },
         BALLOTS_CAST(state, action) {
             state.submitted = true;
-            state.blockHash = action.payload;
+            state.blockHash = action.payload.blockHash;
+            state.status = STORE_STATI.SUCCESS;
         },
     },
     extraReducers: {}
@@ -209,9 +232,9 @@ export const exampleAuthSelect = (state) => state.exampleAuth;
 
 
 
-export const selectBallotsState = (state) => state?.ballots?.status ?? '';
+export const selectBallotsState = (state) => state.ballots.status;
 export const selectBlockHash = (state) => state?.ballots?.blockHash ?? '';
-
+export const selectBallotSubmitted = (state) => state.ballots.submitted;
 
 
 //export reducer

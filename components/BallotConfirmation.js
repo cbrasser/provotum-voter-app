@@ -1,9 +1,12 @@
 import Swiper from 'react-native-swiper'
 import React, { useEffect, useState, } from 'react';
 import { Title1, Title3, Body, Button } from 'react-native-ios-kit'
-import { AppRegistry, StyleSheet, Text, View, Linking, PlatformColor } from 'react-native'
+import { AppRegistry, StyleSheet, Image, View, Linking, PlatformColor } from 'react-native'
 import { selectBallotsState, selectBallotSubmitted, selectBlockHash } from './../redux/ballots/ballotsSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import Video from 'react-native-video';
+import SuccessIcon from './SuccessIcon';
+
 var Spinner = require('react-native-spinkit');
 
 const styles = require('./../style');
@@ -18,7 +21,7 @@ const stylessheet = StyleSheet.create({
         borderRadius: 12,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#1EC337',
+        backgroundColor: '#A3BE8C',
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -37,9 +40,9 @@ const stylessheet = StyleSheet.create({
     },
     text: {
         fontSize: 20,
-        fontWeight: 'bold',
         textAlign: 'center',
-        color: PlatformColor('systemBackground'),
+        marginBottom: 50
+        //color: PlatformColor('systemBackground'),
 
     }
 })
@@ -54,8 +57,9 @@ const BallotConfirmation = (props) => {
         <View style={stylessheet.wrapper}>
 
             <View style={stylessheet.card}>
-                <Text style={stylessheet.text}>Your ballot for this vote is securely stored</Text>
-                <Button style={styles.button} inline centered rounded inverted onPress={() => { openLink() }}>
+
+                <Body style={stylessheet.text}>Your ballot for this vote is securely stored</Body>
+                <Button style={styles.button} inline centered rounded onPress={() => { openLink() }}>
                     see on chain explorer
 </Button>
 

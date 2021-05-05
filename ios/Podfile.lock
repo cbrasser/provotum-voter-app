@@ -213,6 +213,11 @@ PODS:
     - React
   - react-native-udp (2.7.0):
     - React
+  - react-native-video (5.1.1):
+    - React-Core
+    - react-native-video/Video (= 5.1.1)
+  - react-native-video/Video (5.1.1):
+    - React-Core
   - react-native-webview (11.4.3):
     - React-Core
   - React-perflogger (0.64.0)
@@ -351,6 +356,7 @@ DEPENDENCIES:
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-spinkit (from `../node_modules/react-native-spinkit`)
   - react-native-udp (from `../node_modules/react-native-udp`)
+  - react-native-video (from `../node_modules/react-native-video`)
   - react-native-webview (from `../node_modules/react-native-webview`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
@@ -421,6 +427,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-spinkit"
   react-native-udp:
     :path: "../node_modules/react-native-udp"
+  react-native-video:
+    :path: "../node_modules/react-native-video"
   react-native-webview:
     :path: "../node_modules/react-native-webview"
   React-perflogger:
@@ -492,6 +500,7 @@ SPEC CHECKSUMS:
   react-native-safe-area-context: e471852c5ed67eea4b10c5d9d43c1cebae3b231d
   react-native-spinkit: da294fd828216ad211fe36a5c14c1e09f09e62db
   react-native-udp: ccbd878f0f3b968217fc7e3d5eb5839fcaab8b6c
+  react-native-video: 1574074179ecaf6a9dd067116c8f31bf9fec15c8
   react-native-webview: 5d05c17ff4a2075735d72c54acb5317c1737a0f5
   React-perflogger: 9c547d8f06b9bf00cb447f2b75e8d7f19b7e02af
   React-RCTActionSheet: 3080b6e12e0e1a5b313c8c0050699b5c794a1b11

@@ -27,7 +27,7 @@ const Vote = ({ navigation, route }) => {
 
 
     useEffect(async () => {
-        await wait(1000);
+        //await wait(1000);
         setData([
             { y: results.yes, x: 'yes', label: 'yes' },
             { y: results.no, x: 'no', label: 'no' },
@@ -43,7 +43,7 @@ const Vote = ({ navigation, route }) => {
                     animate={{
                         duration: 2000
                     }}
-                    colorScale={["#1EC337", "tomato"]}
+                    colorScale={["#A3BE8C", "#BF616A"]}
                     data={data}
                 />
 

@@ -6,8 +6,8 @@ import {
 
 export default theme = {
     ...DefaultTheme,
-    primaryColor: PlatformColor('systemPink'),
-    disabledColor: PlatformColor('systemYellow'),
+    primaryColor: '#BF616A',
+    disabledColor: '#EBCB8B',
     backgroundColor: PlatformColor('systemBackground'),
     barColor: PlatformColor('systemBackground')
 };

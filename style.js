@@ -99,6 +99,10 @@ module.exports = StyleSheet.create({
         height: 70,
         resizeMode: 'contain'
     },
+    voteImage: {
+        height: 200,
+        resizeMode: 'contain'
+    },
     electionCard: {
         backgroundColor: PlatformColor('secondarySystemBackground'),
         padding: 25,

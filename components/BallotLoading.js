@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { StyleSheet, Text, View } from 'react-native'
-
+import { StyleSheet, Text, View, Image } from 'react-native'
+import { Body } from 'react-native-ios-kit'
+import LoadingIcon from './LoadingIcon';
 var Spinner = require('react-native-spinkit');
 
 const styles = require('./../style');
@@ -15,7 +16,7 @@ const stylessheet = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#9DD6EB',
+        backgroundColor: '#8FBCBB',
         borderRadius: 12,
         shadowColor: "#000",
         shadowOffset: {
@@ -30,8 +31,8 @@ const stylessheet = StyleSheet.create({
     },
     text: {
         fontSize: 20,
-        fontWeight: 'bold',
-        textAlign: 'center'
+        textAlign: 'center',
+        marginTop: 50
 
     }
 })
@@ -40,8 +41,8 @@ const BallotLoading = (props) => {
     return (
         <View style={stylessheet.wrapper}>
             <View style={stylessheet.card}>
-                <Spinner style={styles.spinner} isVisible={true} size={40} type='wave' />
-                <Text style={stylessheet.text}>Encrypting and submitting your ballot</Text>
+                <LoadingIcon></LoadingIcon>
+                <Body style={stylessheet.text}>Encrypting and submitting your ballot</Body>
             </View>
 
         </View >

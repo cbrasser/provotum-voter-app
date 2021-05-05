@@ -88,7 +88,7 @@ export const loadCastBallots = () => async (dispatch) => {
     }
     console.log('test');
     castVotes = JSON.parse(castVotes);
-    console.log('intermediate test', castVotes);
+    //console.log('intermediate test', castVotes);
     if (!castVotes) {
         castVotes = [];
         console.log('new test');
@@ -176,7 +176,9 @@ export const voterSlice = createSlice({
         CAST_BALLOTS(state, action) {
             console.log('setting cast ballots: ', action.payload);
             action.payload.forEach(b => {
-                state.castBallots.push(b);
+                if (!state.castBallots.find(bb => bb.blockHash === b.blockHash)) {
+                    state.castBallots.push(b);
+                }
             });
             try {
                 AsyncStorage.setItem(

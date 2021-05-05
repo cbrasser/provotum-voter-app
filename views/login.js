@@ -36,23 +36,18 @@ const Login = ({ navigation }) => {
         const spinnerTypes = ['CircleFlip', 'Bounce', 'Wave', 'WanderingCubes', 'Pulse', 'ChasingDots', 'ThreeBounce', 'Circle', '9CubeGrid', 'WordPress', 'FadingCircle', 'FadingCircleAlt', 'Arc', 'ArcAlt'];
         return spinnerTypes[Math.floor((Math.random() * spinnerTypes.length))]
     }*/
-    console.log('hey im the login component')
     useEffect(async () => {
         console.log('loading cast ballots');
         await dispatch(loadCastBallots());
-        await loadFromKeychain();
+        let credentials = await loadFromKeychain();
+        console.log('done loading credentials, ', credentials);
+
         await wait(1000);
-        if (seedStoredOnDevice) {
+        // if there is a seed stored in the keystore use it and check if it has already been signed and stored
+        if (credentials) {
+            console.log('found credentials on device')
             setinitPhase(1);
             await wait(1000);
-        }
-
-
-        console.log(apiState);
-        console.log('seed on dev: ', seedStoredOnDevice)
-        // if there is a seed stored in the keystore use it and check if it has already been signed and stored
-        if (seedStoredOnDevice) {
-            console.log('seed is on device')
             setinitPhase(2);
             console.log('loading wallet');
             const wallet = await initializeVoterWallet();
@@ -97,7 +92,7 @@ const Login = ({ navigation }) => {
 
 
 
-    }, []);
+    }, [keyring, api]);
 
     /*useEffect(() => {
         if (isRegistered) {
@@ -152,7 +147,7 @@ const Login = ({ navigation }) => {
     };
 
     const submitSeedPhrase = async () => {
-        let result = registerBySeedPhrase().catch((error) => console.error(error));
+        let result = await registerBySeedPhrase();
         if (result) {
             setinitPhase(3);
             navigation.navigate('votes', { name: 'Jane' })
@@ -172,15 +167,15 @@ const Login = ({ navigation }) => {
             console.log('loading from keychain');
             const credentials = await Keychain.getGenericPassword(options);
             if (credentials) {
-                console.log('got credentials from keychain: ', credentials);
-                setSeed(credentials.password);
-                setSeedStoredOnDevice(true);
+                return credentials;
             } else {
                 console.log('no credentials stored')
+                return false;
             }
         } catch (e) {
             console.log(e)
         }
+        return false;
     }
     const navigateToVotes = () => {
         navigation.navigate('votes', { name: 'Jane' })
@@ -224,8 +219,7 @@ const Login = ({ navigation }) => {
                     )}
                     {(initPhase === 4) && (
                         <View style={styles.loginView}>
-                            <Spinner style={styles.spinner} isVisible={true} size={40} type={'wave'} />
-                            <Body style={styles.loginText}>Could not get your credentials from the device</Body>
+                            <Body style={styles.loginText}>Please enter your secret code</Body>
                             <TextField value={seed} onValueChange={(v) => { setSeed(v) }} placeholder="Seed" style={styles.textInput} />
                             <Button rounded onPress={submitSeedPhrase}>
                                 Submit
@@ -245,7 +239,7 @@ const Login = ({ navigation }) => {
                                 source={require('./../assets/check.gif')}
                             />
                             <Body style={styles.loginText}>You are registered on the blockchain</Body>
-                            <Button rounded onPress={navigateToVotes}>
+                            <Button rounded inverted onPress={navigateToVotes}>
                                 browse votes
                         </Button>
                         </View>

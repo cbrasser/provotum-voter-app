@@ -2,16 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
-    View
+    View,
+    ActionSheetIOS
 } from 'react-native';
 import { useColorScheme, StatusBar, SafeAreaView, KeyboardAvoidingView, TextInput, Text, Platform, TouchableWithoutFeedback, Keyboard, Image } from 'react-native';
 import { TextField, Button } from 'react-native-ios-kit';
 import useSubstrate from '.././substrate-lib/useSubstrate';
 import { createVoterWallet } from './../redux/voter/voterSlice';
 import { getIdentityProviderPublicKey } from './../redux/idp/idpSlice';
-import { selectKeyringPair, loadCastBallots, blindAddress, registerVoter, selectAddressSubmitted, voterIsRegistered } from './../redux/voter/voterSlice';
+import { selectKeyringPair, loadCastBallots, blindAddress, registerVoter, selectAddressSubmitted, voterIsRegistered, wipeVoterData } from './../redux/voter/voterSlice';
 import * as Keychain from 'react-native-keychain';
 import { Body, Icon } from 'react-native-ios-kit';
+import QRCodeScanner from 'react-native-qrcode-scanner';
+import { RNCamera } from 'react-native-camera';
 
 var Spinner = require('react-native-spinkit');
 
@@ -36,7 +39,7 @@ const Login = ({ navigation }) => {
         const spinnerTypes = ['CircleFlip', 'Bounce', 'Wave', 'WanderingCubes', 'Pulse', 'ChasingDots', 'ThreeBounce', 'Circle', '9CubeGrid', 'WordPress', 'FadingCircle', 'FadingCircleAlt', 'Arc', 'ArcAlt'];
         return spinnerTypes[Math.floor((Math.random() * spinnerTypes.length))]
     }*/
-    useEffect(async () => {
+    const goThroughSetup = async () => {
         console.log('loading cast ballots');
         await dispatch(loadCastBallots());
         let credentials = await loadFromKeychain();
@@ -90,8 +93,10 @@ const Login = ({ navigation }) => {
             console.log('no seed on device');
         }
 
+    }
 
-
+    useEffect(async () => {
+        goThroughSetup();
     }, [keyring, api]);
 
     /*useEffect(() => {
@@ -178,11 +183,32 @@ const Login = ({ navigation }) => {
         return false;
     }
     const navigateToVotes = () => {
-        navigation.navigate('votes', { name: 'Jane' })
+        navigation.navigate('votes')
     }
     const navigateToIntro = () => {
         navigation.navigate('intro')
     }
+
+    const openNukeDialog = async () =>
+        ActionSheetIOS.showActionSheetWithOptions(
+            {
+                options: ["Cancel", "Do it"],
+                destructiveButtonIndex: 1,
+                cancelButtonIndex: 0,
+                userInterfaceStyle: 'light',
+                title: 'Wipe Data',
+                message: 'Remove all local data',
+            },
+            buttonIndex => {
+                if (buttonIndex === 1) {
+                    dispatch(wipeVoterData());
+                    goThroughSetup();
+                } else if (buttonIndex === 0) {
+
+
+                }
+            }
+        );
     return (
 
         <KeyboardAvoidingView
@@ -195,6 +221,16 @@ const Login = ({ navigation }) => {
             >
                 <Icon
                     name={'ios-help-circle-outline'}
+                    size={30}
+                    color={'blue'}
+                />
+            </Button>
+            <Button
+                style={styles.nukeButton}
+                onPress={openNukeDialog}
+            >
+                <Icon
+                    name={'ios-flash-outline'}
                     size={30}
                     color={'blue'}
                 />
@@ -218,13 +254,28 @@ const Login = ({ navigation }) => {
                         </View>
                     )}
                     {(initPhase === 4) && (
-                        <View style={styles.loginView}>
-                            <Body style={styles.loginText}>Please enter your secret code</Body>
-                            <TextField value={seed} onValueChange={(v) => { setSeed(v) }} placeholder="Seed" style={styles.textInput} />
-                            <Button rounded onPress={submitSeedPhrase}>
-                                Submit
-                        </Button>
-                        </View>
+
+                        <QRCodeScanner
+                            onRead={(e) => {
+                                setSeed(e.data);
+                                submitSeedPhrase();
+                            }}
+                            flashMode={RNCamera.Constants.FlashMode.torch}
+                            topContent={
+                                <View style={styles.genericCenter}>
+                                    <Body>Please scan your secret code or enter your seed manually</Body>
+                                </View>
+
+                            }
+                            bottomContent={
+                                <View style={styles.genericCenter}>
+                                    <TextField secureTextEntry={true} value={seed} onValueChange={(v) => { setSeed(v) }} placeholder="Seed" style={styles.textInput} />
+                                    <Button style={{ marginTop: 10 }} rounded onPress={submitSeedPhrase}>
+                                        Submit
+                                    </Button>
+                                </View>
+                            }
+                        />
                     )}
                     {initPhase === 2 && (
                         <View style={styles.loginView}>
@@ -241,7 +292,7 @@ const Login = ({ navigation }) => {
                             <Body style={styles.loginText}>You are registered on the blockchain</Body>
                             <Button rounded inverted onPress={navigateToVotes}>
                                 browse votes
-                        </Button>
+                            </Button>
                         </View>
                     )}
                     {initPhase === 5 && (

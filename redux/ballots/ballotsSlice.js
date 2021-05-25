@@ -151,15 +151,18 @@ export const castBallot = (vote, keyring, api) => async (dispatch) => {
 
             if (status.isInBlock) {
                 const blockHash = status.asInBlock;
+                console.log(status);
                 console.log('transaction blockhash: ', blockHash);
                 await dispatch({
                     type: 'ballots/BALLOTS_CAST',
                     payload: blockHash
                 });
+                const signedBlock = await api.rpc.chain.getBlock(blockHash);
                 await dispatch({
                     type: 'voter/CAST_BALLOTS',
                     payload: [{
                         'blockHash': blockHash,
+                        'block': signedBlock,
                         'voteId': vote.electionId,
                         'address': keyring.address,
                     }],

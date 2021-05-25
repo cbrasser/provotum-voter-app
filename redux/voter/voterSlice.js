@@ -8,6 +8,7 @@ import { bnToHex } from '@polkadot/util';
 import BN from 'bn.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { castBallot } from '../ballots/ballotsSlice';
+import * as Keychain from 'react-native-keychain';
 
 export const createVoterWallet = (keyring, seed = '//Voter') => (dispatch) => {
     console.log('creating a wallet with seed: ', seed);
@@ -144,6 +145,18 @@ export const registerVoter = (api, signature, keyringPair) => async (dispatch) =
 
 };
 
+export const wipeVoterData = () => async (dispatch) => {
+    console.log('wiping data');
+    await AsyncStorage.setItem('BALLOTS', JSON.stringify([]));
+    await Keychain.resetGenericPassword();
+    dispatch({
+        type: 'voter/DATA_WIPED',
+    });
+
+
+
+};
+
 export const voterSlice = createSlice({
     name: 'voter',
     initialState: {
@@ -160,6 +173,21 @@ export const voterSlice = createSlice({
         castBallots: [],
     },
     reducers: {
+        DATA_WIPED(state, action) {
+            state = {
+                status: STORE_STATI.INITIAL,
+                keyring: null,
+                blind: {
+                    address: null,
+                    blinded: null,
+                    blindingFactor: null,
+                    params: null,
+                    signature: null,
+                    submitted: false,
+                },
+                castBallots: [],
+            }
+        },
         VOTER_KEYRING_CREATED(state, action) {
             state.keyring = action.payload;
         },

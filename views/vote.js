@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Text, TouchableOpacity, FlatList, View, ActionSheetIOS } from 'react-native';
+import { Text, TouchableOpacity, FlatList, View, ActionSheetIOS, PlatformColor } from 'react-native';
 import { Title1, Title3, Body, Button } from 'react-native-ios-kit'
 import { selectElectionById } from '../redux/votes/votesSlice';
 import { selectAddressSubmitted, selectKeyringPair, selectVotesWithCastBallot, selectBallotForVote } from './../redux/voter/voterSlice';
@@ -9,7 +9,7 @@ import { answerSubject, subscribeToResults } from './../redux/votes/votesSlice';
 import { selectBallotsState, selectBallotSubmitted, selectBlockHash } from './../redux/ballots/ballotsSlice';
 import { castBallot } from './../redux/ballots/ballotsSlice';
 import useSubstrate from './../substrate-lib/useSubstrate';
-import { SwitchRow, NavigationRow, InfoRow, RowItem, TableView } from 'react-native-ios-kit';
+import { SwitchRow, NavigationRow, SegmentedControl, RowItem, TableView } from 'react-native-ios-kit';
 import BallotConfirmation from '../components/BallotConfirmation';
 import BallotLoading from './../components/BallotLoading';
 const styles = require('./../style');
@@ -45,8 +45,10 @@ const Vote = ({ navigation, route }) => {
     const castVote = () =>
         ActionSheetIOS.showActionSheetWithOptions(
             {
+                title: 'Cast Ballot',
+                message: 'Irreversibly cast your ballot for this vote',
                 options: ["cancel", "Submit"],
-                destructiveButtonIndex: 0,
+                destructiveButtonIndex: 1,
                 cancelButtonIndex: 0,
                 userInterfaceStyle: 'light'
             },
@@ -64,14 +66,36 @@ const Vote = ({ navigation, route }) => {
     };
 
 
+    const ResultTag = ({ outcome }) => {
+        if (outcome) {
+            return (
+                <View style={styles.resultTagTrue}>
+                    <Body style={styles.resultTagTrue}>accepted</Body>
+                </View>
+            )
+        } else {
+            return (
+                <View style={styles.resultTagFalse}>
+                    <Body style={styles.resultTagFalse}>declined</Body>
+                </View>)
+        }
+    }
+
     const VoteSubject = ({ id, title }) => {
-        const [selectedAnswer, setSelectedAnswer] = useState(false);
+        const [selectedAnswer, setSelectedAnswer] = useState(0);
         if (election.phase === 'Tallying') {
             console.log(election);
         }
-        const bufferSubjectAnswer = (subjectId, answer) => {
-            setSelectedAnswer(answer);
-            dispatch(answerSubject(election.electionId, subjectId, answer))
+        const bufferSubjectAnswer = (subjectId, index) => {
+            if (index === 0) {
+                setSelectedAnswer(false);
+                dispatch(answerSubject(election.electionId, subjectId, false))
+            } else if (index === 2) {
+                setSelectedAnswer(true);
+                dispatch(answerSubject(election.electionId, subjectId, true))
+            }
+
+
         }
 
         const resultInfo = () => {
@@ -80,17 +104,42 @@ const Vote = ({ navigation, route }) => {
             }
             let results = election.results.find(r => r.subjectId === id);
             console.log('results: ', results);
-            return results.no > results.yes ? 'declined' : 'accepted';
+            return (<ResultTag outcome={results.no < results.yes} />);
         }
 
         switch (election.phase) {
             case 'Voting':
                 if (!ballot) {
-                    return (<SwitchRow
-                        title={title}
-                        value={selectedAnswer}
-                        onValueChange={value => bufferSubjectAnswer(id, value)}
-                    />)
+                    return (
+                        <View
+                        >
+                            <View style={styles.openVoteItem}>
+                                <Body>
+                                    {title}
+                                </Body>
+                                <SegmentedControl
+                                    values={['no', 'abstain', 'yes']}
+                                    selectedIndex={selectedAnswer}
+                                    onValueChange={(value, index) => {
+                                        bufferSubjectAnswer(id, index)
+                                        setSelectedAnswer(index)
+                                    }
+                                    }
+                                    style={{
+                                        width: '80%',
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        flexWrap: 'wrap',
+                                        alignSelf: 'center',
+                                        marginTop: 10
+                                    }}
+                                />
+                            </View>
+
+                            <View style={{ height: 5, width: '100%', backgroundColor: PlatformColor('secondarySystemBackground') }}></View>
+                        </View>
+
+                    )
                 } else {
                     return (<RowItem
                         title={title}
@@ -143,7 +192,7 @@ const Vote = ({ navigation, route }) => {
                 ) : null}
             </View>
 
-            <TableView header="Subjects">
+            <TableView header="Subjects" >
                 {renderSubjects}
             </TableView>
 
@@ -151,14 +200,14 @@ const Vote = ({ navigation, route }) => {
                 <View>
                     <Button rounded onPress={() => { castVote() }}>
                         Submitt
-                        </Button>
+                    </Button>
                 </View>
             ) : null}
             {!userIsRegistered ? (
                 <View>
                     <Button rounded onPress={navigateToLogin}>
                         Register to vote
-                        </Button>
+                    </Button>
                 </View>
             ) : null}
             {ballot ? (<BallotConfirmation ballot={ballot}></BallotConfirmation>) : null}

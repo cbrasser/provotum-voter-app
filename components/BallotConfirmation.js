@@ -49,7 +49,10 @@ const stylessheet = StyleSheet.create({
 const BallotConfirmation = (props) => {
     //const voteId = props.voteId;
     const ballot = props.ballot;
+    console.log('block', ballot.block);
 
+    console.log('block extrinsics', ballot.block.block.extrinsics);
+    console.log('block header ', ballot.block.block.header);
     const openLink = () => {
         Linking.openURL(`https://polkadot.js.org/apps/?rpc=${encodeURIComponent(config.PROVIDER_SOCKET)}#/explorer/query/${ballot.blockHash.toString()}`)
     }
@@ -61,7 +64,7 @@ const BallotConfirmation = (props) => {
                 <Body style={stylessheet.text}>Your ballot for this vote is securely stored</Body>
                 <Button style={styles.button} inline centered rounded onPress={() => { openLink() }}>
                     see on chain explorer
-</Button>
+                </Button>
 
             </View>
             {

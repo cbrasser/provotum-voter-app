@@ -66,6 +66,23 @@ module.exports = StyleSheet.create({
     spinner: {
         color: '#467b9d',
     },
+    resultTagTrue: {
+        color: '#A3BE8C'
+    },
+    resultTagFalse: {
+        color: '#BF616A'
+    },
+    genericCenter: {
+        flex: 1,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    openVoteItem: {
+        padding: 10,
+        marginBottom: 3,
+        display: 'flex',
+    },
     electionList: {
         flex: 1,
         backgroundColor: PlatformColor('systemBackground')
@@ -73,6 +90,12 @@ module.exports = StyleSheet.create({
     helpButton: {
         position: 'absolute',
         top: 5,
+        right: 5,
+        zIndex: 99,
+    },
+    nukeButton: {
+        position: 'absolute',
+        bottom: 5,
         right: 5
     },
     intro: {

@@ -18,25 +18,39 @@ const Intro = ({ navigation }) => {
             <PageControlView style={styles.container}>
                 <View style={styles.introSlide}>
                     <Title1>Welcom to Provotum</Title1>
-                    <Body>How does it work?</Body>
+                    <Body>This is a short introduction to how it works</Body>
+                </View>
+                <View style={styles.introSlide}>
+                    <Image
+                        style={styles.networkImage}
+                        source={require('./../assets/walking.gif')}
+                    />
+                    <Body>With Provotum, you can cast votes on the go</Body>
                 </View>
                 <View style={styles.introSlide}>
                     <Image
                         style={styles.networkImage}
                         source={require('./../assets/network.gif')}
                     />
-                    <Body>Everyone connects to the network</Body>
+                    <Body>Everyone is connected to the same network</Body>
+                </View>
+                <View style={styles.introSlide}>
+                    <Image
+                        style={styles.networkImage}
+                        source={require('./../assets/coder.gif')}
+                    />
+                    <Body>Everyone can verify the results</Body>
                 </View>
                 <View style={styles.introSlide}>
                     <Image
                         style={styles.networkImage}
                         source={require('./../assets/coding.gif')}
                     />
-                    <Body>Code on the Blockchain makes is super secure</Body>
+                    <Body>And the code is publicely available</Body>
                 </View>
                 <View style={styles.introSlide}>
-                    <Title1>K, got it</Title1>
-                    <Button onPress={navigateToLogin}>take me back</Button>
+                    <Title1>I am ready</Title1>
+                    <Button onPress={navigateToLogin}>Let's get started</Button>
                 </View>
             </PageControlView>
 

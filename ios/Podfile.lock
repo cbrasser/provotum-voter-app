@@ -10,6 +10,8 @@ PODS:
     - React-jsi (= 0.64.0)
     - ReactCommon/turbomodule/core (= 0.64.0)
   - glog (0.3.5)
+  - Permission-Camera (3.0.4):
+    - RNPermissions
   - RCT-Folly (2020.01.13.00):
     - boost-for-react-native
     - DoubleConversion
@@ -203,6 +205,14 @@ PODS:
     - React-jsi (= 0.64.0)
     - React-perflogger (= 0.64.0)
   - React-jsinspector (0.64.0)
+  - react-native-camera (3.43.9):
+    - React-Core
+    - react-native-camera/RCT (= 3.43.9)
+    - react-native-camera/RN (= 3.43.9)
+  - react-native-camera/RCT (3.43.9):
+    - React-Core
+  - react-native-camera/RN (3.43.9):
+    - React-Core
   - react-native-get-random-values (1.7.0):
     - React-Core
   - react-native-randombytes (3.6.1):
@@ -294,6 +304,8 @@ PODS:
     - React-Core
   - RNOS (1.2.6):
     - React
+  - RNPermissions (3.0.4):
+    - React-Core
   - RNReanimated (2.1.0):
     - DoubleConversion
     - FBLazyVector
@@ -338,6 +350,7 @@ DEPENDENCIES:
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/React/FBReactNativeSpec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
+  - Permission-Camera (from `../node_modules/react-native-permissions/ios/Camera`)
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
@@ -351,6 +364,7 @@ DEPENDENCIES:
   - React-jsi (from `../node_modules/react-native/ReactCommon/jsi`)
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
+  - react-native-camera (from `../node_modules/react-native-camera`)
   - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
   - react-native-randombytes (from `../node_modules/react-native-randombytes`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
@@ -375,6 +389,7 @@ DEPENDENCIES:
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNKeychain (from `../node_modules/react-native-keychain`)
   - RNOS (from `../node_modules/react-native-os`)
+  - RNPermissions (from `../node_modules/react-native-permissions`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
@@ -395,6 +410,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/React/FBReactNativeSpec"
   glog:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
+  Permission-Camera:
+    :path: "../node_modules/react-native-permissions/ios/Camera"
   RCT-Folly:
     :podspec: "../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec"
   RCTRequired:
@@ -417,6 +434,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsiexecutor"
   React-jsinspector:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
+  react-native-camera:
+    :path: "../node_modules/react-native-camera"
   react-native-get-random-values:
     :path: "../node_modules/react-native-get-random-values"
   react-native-randombytes:
@@ -465,6 +484,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-keychain"
   RNOS:
     :path: "../node_modules/react-native-os"
+  RNPermissions:
+    :path: "../node_modules/react-native-permissions"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
@@ -484,6 +505,7 @@ SPEC CHECKSUMS:
   FBLazyVector: 49cbe4b43e445b06bf29199b6ad2057649e4c8f5
   FBReactNativeSpec: 169f6ba87f3e2133478a14e02c02f9abf61476ac
   glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
+  Permission-Camera: ffd449756840ddc0f6294e95d688fecaadfe238c
   RCT-Folly: ec7a233ccc97cc556cf7237f0db1ff65b986f27c
   RCTRequired: 2f8cb5b7533219bf4218a045f92768129cf7050a
   RCTTypeSafety: 512728b73549e72ad7330b92f3d42936f2a4de5b
@@ -495,6 +517,7 @@ SPEC CHECKSUMS:
   React-jsi: 74341196d9547cbcbcfa4b3bbbf03af56431d5a1
   React-jsiexecutor: 06a9c77b56902ae7ffcdd7a4905f664adc5d237b
   React-jsinspector: 0ae35a37b20d5e031eb020a69cc5afdbd6406301
+  react-native-camera: a3193de4cc61352d9309d15a849b1e0c4a085ac4
   react-native-get-random-values: 237bffb1c7e05fb142092681531810a29ba53015
   react-native-randombytes: 5fc412efe7b5c55b9002c0004d75fe5fabcaa507
   react-native-safe-area-context: e471852c5ed67eea4b10c5d9d43c1cebae3b231d
@@ -519,6 +542,7 @@ SPEC CHECKSUMS:
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNKeychain: f75b8c8b2f17d3b2aa1f25b4a0ac5b83d947ff8f
   RNOS: 6f2f9a70895bbbfbdad7196abd952e7b01d45027
+  RNPermissions: 75128bfb4c4ef92f572a8efdb8adfbfab75e8ed0
   RNReanimated: b8c8004b43446e3c2709fe64b2b41072f87428ad
   RNScreens: bd1523c3bde7069b8e958e5a16e1fc7722ad0bdd
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
@@ -526,6 +550,6 @@ SPEC CHECKSUMS:
   TcpSockets: 8d839b9b14f6f344d98e4642ded13ab3112b462d
   Yoga: 8c8436d4171c87504c648ae23b1d81242bdf3bbf
 
-PODFILE CHECKSUM: 94c12f2d66da3c083e44d5932403fce1da79f3d3
+PODFILE CHECKSUM: d94e4567b906598a2900283a52f5b4860d045857
 
 COCOAPODS: 1.10.1

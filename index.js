@@ -1,6 +1,12 @@
 /**
  * @format
  */
+
+/*
+the import of crypte, shims, and globals must not be changed even if your IDE tells you they
+are not used! They are essential and without them the app will not work.
+*/
+
 import './shim.js'
 import crypto from 'crypto'
 

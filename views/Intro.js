@@ -1,11 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { PageControlView } from 'react-native-ios-kit';
 
 import { Title1, Title3, Body, Button } from 'react-native-ios-kit'
 import { View, Image } from 'react-native';
 const styles = require('../style');
-import { WebView } from 'react-native-webview';
 
+
+/*
+This is the view shown when the info/help button in the login screen is tapped. The idea
+is to create some sort of informational tutorial that helps the user, however i did 
+not have the time to actually create the tutorial content. 
+*/
 const Intro = ({ navigation }) => {
 
     const navigateToLogin = () => {

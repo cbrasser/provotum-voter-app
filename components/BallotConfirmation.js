@@ -1,13 +1,10 @@
-import Swiper from 'react-native-swiper'
-import React, { useEffect, useState, } from 'react';
-import { Title1, Title3, Body, Button } from 'react-native-ios-kit'
-import { AppRegistry, StyleSheet, Image, View, Linking, PlatformColor } from 'react-native'
-import { selectBallotsState, selectBallotSubmitted, selectBlockHash } from './../redux/ballots/ballotsSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import Video from 'react-native-video';
-import SuccessIcon from './SuccessIcon';
+/* eslint-disable prettier/prettier */
 
-var Spinner = require('react-native-spinkit');
+import React from 'react';
+import { Body, Button } from 'react-native-ios-kit'
+import { StyleSheet, View, Linking } from 'react-native'
+
+
 
 const styles = require('./../style');
 
@@ -70,7 +67,7 @@ const BallotConfirmation = (props) => {
             {
                 false ? (
                     <View style={stylessheet.slide3}>
-                        <Text style={stylessheet.text}>Something went wrong with sending your ballot</Text>
+                        <Body style={stylessheet.text}>Something went wrong with sending your ballot</Body>
                     </View>
                 ) : null
             }

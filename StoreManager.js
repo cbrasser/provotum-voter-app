@@ -18,7 +18,11 @@ import Subject from './views/subject';
 import Intro from './views/Intro';
 import useSubstrate from './substrate-lib/useSubstrate';
 
+/*
+This component does not have any markup itself, it handles navigation and makes sure that 
+all other components that actually display something have access to the store.
 
+*/
 const StoreManager = () => {
     const vaUrl = 'localhost:3000';
     const providerSocket = 'ws://localhost:9944'

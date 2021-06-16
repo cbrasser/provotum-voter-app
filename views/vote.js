@@ -1,20 +1,23 @@
+/* eslint-disable prettier/prettier */
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Text, TouchableOpacity, FlatList, View, ActionSheetIOS, PlatformColor } from 'react-native';
-import { Title1, Title3, Body, Button } from 'react-native-ios-kit'
+import { View, ActionSheetIOS, PlatformColor } from 'react-native';
+import { Title1, Body, Button } from 'react-native-ios-kit'
 import { selectElectionById } from '../redux/votes/votesSlice';
-import { selectAddressSubmitted, selectKeyringPair, selectVotesWithCastBallot, selectBallotForVote } from './../redux/voter/voterSlice';
+import { selectAddressSubmitted, selectKeyringPair, selectBallotForVote } from './../redux/voter/voterSlice';
 import { answerSubject, subscribeToResults } from './../redux/votes/votesSlice';
-import { selectBallotsState, selectBallotSubmitted, selectBlockHash } from './../redux/ballots/ballotsSlice';
+import { selectBallotsState } from './../redux/ballots/ballotsSlice';
 import { castBallot } from './../redux/ballots/ballotsSlice';
 import useSubstrate from './../substrate-lib/useSubstrate';
-import { SwitchRow, NavigationRow, SegmentedControl, RowItem, TableView } from 'react-native-ios-kit';
+import { NavigationRow, SegmentedControl, RowItem, TableView } from 'react-native-ios-kit';
 import BallotConfirmation from '../components/BallotConfirmation';
 import BallotLoading from './../components/BallotLoading';
 const styles = require('./../style');
 
-
+/*
+    This is the view showed when a vote is selected from the vote list
+*/
 const Vote = ({ navigation, route }) => {
     const userIsRegistered = useSelector(selectAddressSubmitted);
     const id = route.params.id;

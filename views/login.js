@@ -1,16 +1,27 @@
+/* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { View, ActionSheetIOS } from 'react-native';
 import {
-    View,
-    ActionSheetIOS
+    KeyboardAvoidingView,
+    Platform,
+    TouchableWithoutFeedback,
+    Keyboard,
+    Image,
 } from 'react-native';
-import { useColorScheme, StatusBar, SafeAreaView, KeyboardAvoidingView, TextInput, Text, Platform, TouchableWithoutFeedback, Keyboard, Image } from 'react-native';
 import { TextField, Button } from 'react-native-ios-kit';
 import useSubstrate from '.././substrate-lib/useSubstrate';
 import { createVoterWallet } from './../redux/voter/voterSlice';
 import { getIdentityProviderPublicKey } from './../redux/idp/idpSlice';
-import { selectKeyringPair, loadCastBallots, blindAddress, registerVoter, selectAddressSubmitted, voterIsRegistered, wipeVoterData } from './../redux/voter/voterSlice';
+import {
+    loadCastBallots,
+    blindAddress,
+    registerVoter,
+    selectAddressSubmitted,
+    voterIsRegistered,
+    wipeVoterData,
+} from './../redux/voter/voterSlice';
 import * as Keychain from 'react-native-keychain';
 import { Body, Icon } from 'react-native-ios-kit';
 import QRCodeScanner from 'react-native-qrcode-scanner';
@@ -31,14 +42,23 @@ const Login = ({ navigation }) => {
     //const voterWallet = useSelector(selectKeyringPair)
     const { keyring, keyringState, api, apiState } = useSubstrate();
 
-    const wait = (milliseconds) => {
+    const wait = milliseconds => {
         return new Promise(resolve => setTimeout(resolve, milliseconds));
-    }
+    };
 
-    /*const getRandomSpinner = () => {
-        const spinnerTypes = ['CircleFlip', 'Bounce', 'Wave', 'WanderingCubes', 'Pulse', 'ChasingDots', 'ThreeBounce', 'Circle', '9CubeGrid', 'WordPress', 'FadingCircle', 'FadingCircleAlt', 'Arc', 'ArcAlt'];
-        return spinnerTypes[Math.floor((Math.random() * spinnerTypes.length))]
-    }*/
+
+    /*
+    This routine is called upon start of the application and may not be completely 
+    intuitive. It basically checks whether there is a wallet seed stored on the local
+    storage of the device, and then if the wallet has already been registered with Provotum.
+    The 'wait' statements serve no purpose other than making the loading icons visible for a moment
+    in order to inform the user on what is going on. They may not be needed in a production
+    environment where load times get longer. 
+
+    I intentionally left the console logs in here when i had to finish coding in order to make 
+    development a bit easier on the next dev, because RN debugging on the simulator is a bit of a 
+    pain and often console is the best way to go.
+    */
     const goThroughSetup = async () => {
         console.log('loading cast ballots');
         await dispatch(loadCastBallots());
@@ -48,7 +68,7 @@ const Login = ({ navigation }) => {
         await wait(1000);
         // if there is a seed stored in the keystore use it and check if it has already been signed and stored
         if (credentials) {
-            console.log('found credentials on device')
+            console.log('found credentials on device');
             setinitPhase(1);
             await wait(1000);
             setinitPhase(2);
@@ -57,10 +77,10 @@ const Login = ({ navigation }) => {
             await wait(1000);
             console.log('checking if address is registered on the chain');
             let addressOnChain = await checkAddressOnBlockchain(wallet);
-            // if the address has already been signed and stored everything is ready and the user 
+            // if the address has already been signed and stored everything is ready and the user
             // is redirected to the votes screen
             if (addressOnChain) {
-                console.log('voter already registered on BC')
+                console.log('voter already registered on BC');
                 setinitPhase(3);
                 await wait(1000);
                 //navigation.navigate('votes', { name: 'Jane' })
@@ -68,13 +88,15 @@ const Login = ({ navigation }) => {
             } else {
                 setinitPhase(5);
                 await wait(1000);
-                console.log('voter not yet on BC, blinding and registering')
+                console.log('voter not yet on BC, blinding and registering');
                 console.log('Fetching identity provider public key');
                 const idpParams = await dispatch(getIdentityProviderPublicKey());
                 setinitPhase(6);
                 await wait(1000);
                 console.log('Blinding wallet and sending it to the IdP for signing');
-                const signature = await dispatch(blindAddress(wallet.addressRaw, idpParams.payload));
+                const signature = await dispatch(
+                    blindAddress(wallet.addressRaw, idpParams.payload),
+                );
                 setinitPhase(7);
                 await wait(1000);
                 const result = await dispatch(registerVoter(api, signature, wallet));
@@ -82,7 +104,7 @@ const Login = ({ navigation }) => {
                 if (result) {
                     setinitPhase(8);
                     await wait(1000);
-                    setinitPhase(3)
+                    setinitPhase(3);
                     //navigation.navigate('votes', { name: 'Jane' })
                 }
             }
@@ -92,30 +114,23 @@ const Login = ({ navigation }) => {
             setinitPhase(4);
             console.log('no seed on device');
         }
-
-    }
+    };
 
     useEffect(async () => {
         goThroughSetup();
     }, [keyring, api]);
 
-    /*useEffect(() => {
-        if (isRegistered) {
-            
-        }
-    });
-    */
 
     const initializeVoterWallet = async () => {
         let wallet = await dispatch(createVoterWallet(keyring, `//${seed}asdsfaa`));
         return wallet;
-    }
+    };
 
-    const checkAddressOnBlockchain = async (voterWallet) => {
+    const checkAddressOnBlockchain = async voterWallet => {
         const result = await dispatch(voterIsRegistered(api, voterWallet));
         console.log(result);
         return result;
-    }
+    };
 
     const registerBySeedPhrase = async () => {
         //console.log('keyringstate: ', keyringState)
@@ -125,7 +140,9 @@ const Login = ({ navigation }) => {
             setIsInitializing(true);
             console.log('Registering voter...', seed);
 
-            const voterKeyringPair = await dispatch(createVoterWallet(keyring, `//${seed}`));
+            const voterKeyringPair = await dispatch(
+                createVoterWallet(keyring, `//${seed}`),
+            );
             console.log('Created voter wallet', voterKeyringPair);
 
             console.log('Fetching identity provider public key');
@@ -133,10 +150,14 @@ const Login = ({ navigation }) => {
             console.log('idp params: ', idpParams.payload);
 
             console.log('Blinding wallet and sending it to the IdP for signing');
-            const signature = await dispatch(blindAddress(voterKeyringPair.addressRaw, idpParams.payload));
+            const signature = await dispatch(
+                blindAddress(voterKeyringPair.addressRaw, idpParams.payload),
+            );
 
             console.log('Registering voter with signature: ', signature);
-            const result = await dispatch(registerVoter(api, signature, voterKeyringPair));
+            const result = await dispatch(
+                registerVoter(api, signature, voterKeyringPair),
+            );
             console.log('result: ', result);
 
             await Keychain.setGenericPassword('someUsername', seed, {
@@ -144,7 +165,7 @@ const Login = ({ navigation }) => {
                 //securityLevel: Keychain.SECURITY_LEVEL.SECURE_HARDWARE,
                 //storage: Keychain.STORAGE_TYPE.AES,
                 authenticationType: Keychain.AUTHENTICATION_TYPE.BIOMETRICS,
-                biometryType: Keychain.BIOMETRY_TYPE.FACE_ID
+                biometryType: Keychain.BIOMETRY_TYPE.FACE_ID,
             });
 
             return result;
@@ -155,8 +176,7 @@ const Login = ({ navigation }) => {
         let result = await registerBySeedPhrase();
         if (result) {
             setinitPhase(3);
-            navigation.navigate('votes', { name: 'Jane' })
-
+            navigation.navigate('votes', { name: 'Jane' });
         }
     };
     const loadFromKeychain = async () => {
@@ -174,25 +194,25 @@ const Login = ({ navigation }) => {
             if (credentials) {
                 return credentials;
             } else {
-                console.log('no credentials stored')
+                console.log('no credentials stored');
                 return false;
             }
         } catch (e) {
-            console.log(e)
+            console.log(e);
         }
         return false;
-    }
+    };
     const navigateToVotes = () => {
-        navigation.navigate('votes')
-    }
+        navigation.navigate('votes');
+    };
     const navigateToIntro = () => {
-        navigation.navigate('intro')
-    }
+        navigation.navigate('intro');
+    };
 
     const openNukeDialog = async () =>
         ActionSheetIOS.showActionSheetWithOptions(
             {
-                options: ["Cancel", "Do it"],
+                options: ['Cancel', 'Do it'],
                 destructiveButtonIndex: 1,
                 cancelButtonIndex: 0,
                 userInterfaceStyle: 'light',
@@ -204,73 +224,67 @@ const Login = ({ navigation }) => {
                     dispatch(wipeVoterData());
                     goThroughSetup();
                 } else if (buttonIndex === 0) {
-
-
                 }
-            }
+            },
         );
     return (
-
         <KeyboardAvoidingView
-            behavior={Platform.OS === "ios" ? "padding" : "height"}
-            style={styles.login}
-        >
-            <Button
-                style={styles.helpButton}
-                onPress={navigateToIntro}
-            >
-                <Icon
-                    name={'ios-help-circle-outline'}
-                    size={30}
-                    color={'blue'}
-                />
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            style={styles.login}>
+            <Button style={styles.helpButton} onPress={navigateToIntro}>
+                <Icon name={'ios-help-circle-outline'} size={30} color={'blue'} />
             </Button>
-            <Button
-                style={styles.nukeButton}
-                onPress={openNukeDialog}
-            >
-                <Icon
-                    name={'ios-flash-outline'}
-                    size={30}
-                    color={'blue'}
-                />
+            <Button style={styles.nukeButton} onPress={openNukeDialog}>
+                <Icon name={'ios-flash-outline'} size={30} color={'blue'} />
             </Button>
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss} >
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View>
                     {initPhase === 0 && (
                         <View style={styles.loginView}>
-                            <Spinner style={styles.spinner} isVisible={true} size={40} type={'wave'} />
+                            <Spinner
+                                style={styles.spinner}
+                                isVisible={true}
+                                size={40}
+                                type={'wave'}
+                            />
                             <Body style={styles.loginText}>Looking for your credentials</Body>
                         </View>
                     )}
                     {initPhase === 1 && (
                         <View style={styles.loginView}>
-                            <Icon
-                                name={'ios-map-outline'}
-                                size={30}
-                                color={'blue'}
-                            />
+                            <Icon name={'ios-map-outline'} size={30} color={'blue'} />
                             <Body style={styles.loginText}>Found your credentials</Body>
                         </View>
                     )}
-                    {(initPhase === 4) && (
-
+                    {initPhase === 4 && (
                         <QRCodeScanner
-                            onRead={(e) => {
+                            onRead={e => {
                                 setSeed(e.data);
                                 submitSeedPhrase();
                             }}
                             flashMode={RNCamera.Constants.FlashMode.torch}
                             topContent={
                                 <View style={styles.genericCenter}>
-                                    <Body>Please scan your secret code or enter your seed manually</Body>
+                                    <Body>
+                                        Please scan your secret code or enter your seed manually
+                                    </Body>
                                 </View>
-
                             }
                             bottomContent={
                                 <View style={styles.genericCenter}>
-                                    <TextField secureTextEntry={true} value={seed} onValueChange={(v) => { setSeed(v) }} placeholder="Seed" style={styles.textInput} />
-                                    <Button style={{ marginTop: 10 }} rounded onPress={submitSeedPhrase}>
+                                    <TextField
+                                        secureTextEntry={true}
+                                        value={seed}
+                                        onValueChange={v => {
+                                            setSeed(v);
+                                        }}
+                                        placeholder="Seed"
+                                        style={styles.textInput}
+                                    />
+                                    <Button
+                                        style={{ marginTop: 10 }}
+                                        rounded
+                                        onPress={submitSeedPhrase}>
                                         Submit
                                     </Button>
                                 </View>
@@ -279,8 +293,15 @@ const Login = ({ navigation }) => {
                     )}
                     {initPhase === 2 && (
                         <View style={styles.loginView}>
-                            <Spinner style={styles.spinner} isVisible={true} size={40} type={'wave'} />
-                            <Body style={styles.loginText}>Searching for you on the blockchain</Body>
+                            <Spinner
+                                style={styles.spinner}
+                                isVisible={true}
+                                size={40}
+                                type={'wave'}
+                            />
+                            <Body style={styles.loginText}>
+                                Searching for you on the blockchain
+                            </Body>
                         </View>
                     )}
                     {initPhase === 3 && (
@@ -289,7 +310,9 @@ const Login = ({ navigation }) => {
                                 style={styles.checkImage}
                                 source={require('./../assets/check.gif')}
                             />
-                            <Body style={styles.loginText}>You are registered on the blockchain</Body>
+                            <Body style={styles.loginText}>
+                                You are registered on the blockchain
+                            </Body>
                             <Button rounded inverted onPress={navigateToVotes}>
                                 browse votes
                             </Button>
@@ -297,43 +320,71 @@ const Login = ({ navigation }) => {
                     )}
                     {initPhase === 5 && (
                         <View style={styles.loginView}>
-                            <Spinner style={styles.spinner} isVisible={true} size={40} type={'wave'} />
-                            <Body style={styles.loginText}>Contacting the identity provider</Body>
+                            <Spinner
+                                style={styles.spinner}
+                                isVisible={true}
+                                size={40}
+                                type={'wave'}
+                            />
+                            <Body style={styles.loginText}>
+                                Contacting the identity provider
+                            </Body>
                         </View>
                     )}
                     {initPhase === 6 && (
                         <View style={styles.loginView}>
-                            <Spinner style={styles.spinner} isVisible={true} size={40} type={'wave'} />
-                            <Body style={styles.loginText}>securely blinding your address</Body>
+                            <Spinner
+                                style={styles.spinner}
+                                isVisible={true}
+                                size={40}
+                                type={'wave'}
+                            />
+                            <Body style={styles.loginText}>
+                                securely blinding your address
+                            </Body>
                         </View>
                     )}
                     {initPhase === 7 && (
                         <View style={styles.loginView}>
-                            <Spinner style={styles.spinner} isVisible={true} size={40} type={'wave'} />
-                            <Body style={styles.loginText}>Registrating your voter address with the Blockchain</Body>
+                            <Spinner
+                                style={styles.spinner}
+                                isVisible={true}
+                                size={40}
+                                type={'wave'}
+                            />
+                            <Body style={styles.loginText}>
+                                Registrating your voter address with the Blockchain
+                            </Body>
                         </View>
                     )}
                     {initPhase === 8 && (
                         <View style={styles.loginView}>
-                            <Spinner style={styles.spinner} isVisible={true} size={40} type={'wave'} />
+                            <Spinner
+                                style={styles.spinner}
+                                isVisible={true}
+                                size={40}
+                                type={'wave'}
+                            />
                             <Body style={styles.loginText}>Loading votes</Body>
                         </View>
                     )}
                     {initPhase === -1 && (
                         <View style={styles.loginView}>
-                            <Spinner style={styles.spinner} isVisible={true} size={40} type={'wave'} />
-                            <Body style={styles.loginText}>you are disconnected from the blockchain</Body>
+                            <Spinner
+                                style={styles.spinner}
+                                isVisible={true}
+                                size={40}
+                                type={'wave'}
+                            />
+                            <Body style={styles.loginText}>
+                                you are disconnected from the blockchain
+                            </Body>
                         </View>
                     )}
-
-
                 </View>
             </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
-
-    )
+    );
 };
-
-
 
 export default Login;
